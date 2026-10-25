@@ -1,0 +1,6 @@
+{
+  "name": "ALIDAUNIA SERVICES",
+  "description": "Pianificazione integrata, realizzazione e gestione operativa di eliporti, elisuperfici e vertiporti.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

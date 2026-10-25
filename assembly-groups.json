@@ -1,0 +1,162 @@
+[
+  {
+    "name": "cabinShell",
+    "offset": [
+      0,
+      0.55,
+      0
+    ],
+    "order": 2,
+    "meshCount": 17
+  },
+  {
+    "name": "cabinInterior",
+    "offset": [
+      0,
+      -0.22,
+      0
+    ],
+    "order": 0,
+    "meshCount": 43
+  },
+  {
+    "name": "glazingLeft",
+    "offset": [
+      0,
+      0.25,
+      -1.65
+    ],
+    "order": 4,
+    "meshCount": 4
+  },
+  {
+    "name": "glazingRight",
+    "offset": [
+      0,
+      0.25,
+      1.65
+    ],
+    "order": 4,
+    "meshCount": 4
+  },
+  {
+    "name": "engineLeft",
+    "offset": [
+      0,
+      1.35,
+      -1.45
+    ],
+    "order": 5,
+    "meshCount": 9
+  },
+  {
+    "name": "engineRight",
+    "offset": [
+      0,
+      1.35,
+      1.45
+    ],
+    "order": 5,
+    "meshCount": 9
+  },
+  {
+    "name": "transmission",
+    "offset": [
+      0,
+      1.65,
+      0
+    ],
+    "order": 6,
+    "meshCount": 3
+  },
+  {
+    "name": "landingGear",
+    "offset": [
+      0,
+      -1,
+      0
+    ],
+    "order": 1,
+    "meshCount": 8
+  },
+  {
+    "name": "tailAssembly",
+    "offset": [
+      -2.6,
+      0.35,
+      0
+    ],
+    "order": 3,
+    "meshCount": 4
+  },
+  {
+    "name": "tailRotor",
+    "offset": [
+      0,
+      0,
+      -0.55
+    ],
+    "order": 7,
+    "meshCount": 7
+  },
+  {
+    "name": "mainRotor",
+    "offset": [
+      0,
+      2.2,
+      0
+    ],
+    "order": 8,
+    "meshCount": 0
+  },
+  {
+    "name": "rotorHub",
+    "offset": [
+      0,
+      0,
+      0
+    ],
+    "order": 8,
+    "meshCount": 18
+  },
+  {
+    "name": "rotorBlade01",
+    "offset": [
+      -0.6933558090789032,
+      0.08,
+      -0.9796923705749214
+    ],
+    "order": 10,
+    "meshCount": 1
+  },
+  {
+    "name": "rotorBlade02",
+    "offset": [
+      -0.9796923729045105,
+      0.08,
+      0.6933558640629054
+    ],
+    "order": 11,
+    "meshCount": 1
+  },
+  {
+    "name": "rotorBlade03",
+    "offset": [
+      0.693355865849762,
+      0.08,
+      0.9796923705749214
+    ],
+    "order": 12,
+    "meshCount": 1
+  },
+  {
+    "name": "rotorBlade04",
+    "offset": [
+      0.9796923688786318,
+      0.08,
+      -0.6933558640629054
+    ],
+    "order": 13,
+    "meshCount": 1
+  }
+]
