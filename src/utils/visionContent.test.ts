@@ -74,3 +74,12 @@ test('retired page-two concepts and helipad imagery are gone', () => {
     assert.ok(!page.toLowerCase().includes(retired.toLowerCase()), `still references ${retired}`);
   }
 });
+
+test('page two is an aviation base: retired material-gallery builders are gone, fallback posters exist', async () => {
+  const { readdirSync, existsSync } = await import('node:fs');
+  const zones = readdirSync(new URL('../vision/zones/', import.meta.url)).sort();
+  assert.deepEqual(zones, ['aircraft.ts', 'annex.ts', 'apron.ts', 'briefing.ts', 'hangar.ts', 'studio.ts']);
+  const world = readFileSync(new URL('../vision/createVisionWorld.ts', import.meta.url), 'utf8');
+  for (const retired of ['vault', 'canopy', 'horizon', 'gallery', 'glazing']) assert.ok(!world.includes(`zones/${retired}`), `still builds ${retired}`);
+  for (let i = 1; i <= 6; i++) assert.ok(existsSync(new URL(`../../public/vision/posters/v${i}.webp`, import.meta.url)), `missing poster v${i}`);
+});

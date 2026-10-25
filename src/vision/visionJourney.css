@@ -22,18 +22,20 @@
 .vj-backdrop__canvas { position: absolute; inset: 0; opacity: 0; transition: opacity 0.9s ease; }
 .vj[data-world='ready'] .vj-backdrop__canvas { opacity: 1; }
 
-/* Calm static compositions while loading, without WebGL or when reduced data/GPU fails. */
+/* While loading, without WebGL or if the aircraft cannot load: still frames rendered from this
+   same aviation base (public/vision/posters), one per chapter. */
 .vj-backdrop__fallback {
   position: absolute;
   inset: 0;
-  background: linear-gradient(180deg, #0a1a2e 0%, #1b293b 58%, #2a333e 100%);
-  transition: background 0.8s ease;
+  background: #1b2430 url('/vision/posters/v1.webp') center / cover no-repeat;
 }
-.vj[data-chapter='2'] .vj-backdrop__fallback { background: linear-gradient(180deg, #4c5a69 0%, #8d8a84 55%, #2b3035 100%); }
-.vj[data-chapter='3'] .vj-backdrop__fallback { background: linear-gradient(180deg, #a9bccf 0%, #e3e6e8 55%, #cfcac2 100%); }
-.vj[data-chapter='4'] .vj-backdrop__fallback { background: linear-gradient(180deg, #1a1d22 0%, #2f343b 60%, #20242a 100%); }
-.vj[data-chapter='5'] .vj-backdrop__fallback { background: linear-gradient(180deg, #a7bfd6 0%, #eceeed 55%, #d6d1c8 100%); }
-.vj[data-chapter='6'] .vj-backdrop__fallback { background: linear-gradient(180deg, #b1c8de 0%, #f5f3ee 60%, #dcd6cb 100%); }
+.vj[data-chapter='2'] .vj-backdrop__fallback { background-color: #a6a39b; background-image: url('/vision/posters/v2.webp'); }
+.vj[data-chapter='3'] .vj-backdrop__fallback { background-color: #d9dad6; background-image: url('/vision/posters/v3.webp'); }
+.vj[data-chapter='4'] .vj-backdrop__fallback { background-color: #3a434e; background-image: url('/vision/posters/v4.webp'); }
+.vj[data-chapter='5'] .vj-backdrop__fallback { background-color: #e6e6e2; background-image: url('/vision/posters/v5.webp'); }
+.vj[data-chapter='6'] .vj-backdrop__fallback { background-color: #c9ced2; background-image: url('/vision/posters/v6.webp'); }
+/* Once the live world is showing, the stills are not needed (and are not downloaded). */
+.vj[data-world='ready'] .vj-backdrop__fallback { background-image: none; }
 
 .vj-chapter { position: relative; z-index: 1; }
 .vj-chapter[data-tone='dark'] {
@@ -42,8 +44,8 @@
   --vj-ink-faint: rgba(245, 246, 247, 0.66);
   --vj-accent: #c9dbef;
   --vj-rule: rgba(245, 246, 247, 0.22);
-  --vj-shade: rgba(8, 28, 51, 0.86);
-  --vj-shade-mid: rgba(8, 28, 51, 0.62);
+  --vj-shade: rgba(8, 28, 51, 0.88);
+  --vj-shade-mid: rgba(8, 28, 51, 0.7);
   color: var(--vj-ink);
 }
 .vj-chapter[data-tone='light'] {
@@ -77,7 +79,7 @@
 .vj-copy::before {
   content: '';
   position: absolute;
-  inset: -16% -26% -16% -30%;
+  inset: -26% -34% -26% -38%;
   z-index: -1;
   pointer-events: none;
   background: radial-gradient(closest-side, var(--vj-shade) 0%, var(--vj-shade-mid) 58%, transparent 100%);
@@ -258,6 +260,6 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .vj-backdrop__canvas, .vj-backdrop__fallback { transition: none; }
+  .vj-backdrop__canvas { transition: none; }
   .vj-passage { height: 45svh; }
 }

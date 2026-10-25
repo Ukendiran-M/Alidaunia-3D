@@ -88,7 +88,7 @@ export const VisionPage: React.FC<VisionPageProps> = ({ onNavigate }) => {
       </section>
 
       {/* V2 — board-formed concrete gallery */}
-      <section id="v2" className="vj-chapter" data-tone="dark" data-journey-mark="1" aria-labelledby="v2-title">
+      <section id="v2" className="vj-chapter" data-tone="light" data-journey-mark="1" aria-labelledby="v2-title">
         <div className="vj-frame">
           <div className="vj-copy vj-copy--right">
             <Kicker>{v2.kicker}</Kicker>

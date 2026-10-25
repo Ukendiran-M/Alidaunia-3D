@@ -8,12 +8,17 @@
 
 import * as THREE from 'three';
 import { MaterialLibrary } from './materials';
+import type { Artwork, BrandArt } from './artwork';
 
 export interface ZoneContext {
   scene: THREE.Scene;
   materials: MaterialLibrary;
   mobile: boolean;
   shadows: boolean;
+  /** Logo image and fonts; artwork repaints itself once they are available. */
+  brand: Promise<BrandArt>;
+  /** False once the route has been left: late async work must discard its results. */
+  alive(): boolean;
 }
 
 export interface Zone {
@@ -22,6 +27,35 @@ export interface Zone {
   lights: THREE.Light[];
   /** Apply the complete state for journey position `s`. Must be a pure function of `s`. */
   update(s: number, camera: THREE.PerspectiveCamera): void;
+  /** Resolves when the zone's essential assets are in place (first frame waits for it). */
+  ready?: Promise<void>;
+}
+
+/** Register artwork textures with the library and repaint them once brand assets load. */
+export function useArtwork(ctx: ZoneContext, ...items: Artwork[]) {
+  for (const item of items) ctx.materials.adopt(item.texture);
+  return ctx.brand.then((art) => {
+    if (ctx.alive()) items.forEach((item) => item.paint(art));
+  });
+}
+
+/** Horizontal plane whose UVs are world X/Z (metres), optionally offset. */
+export function worldPlane(x0: number, x1: number, z0: number, z1: number, y = 0, u0 = 0, v0 = 0) {
+  const geometry = new THREE.PlaneGeometry(x1 - x0, z1 - z0);
+  geometry.rotateX(-Math.PI / 2);
+  geometry.translate((x0 + x1) / 2, y, (z0 + z1) / 2);
+  const p = geometry.getAttribute('position') as THREE.BufferAttribute;
+  const uv = geometry.getAttribute('uv') as THREE.BufferAttribute;
+  for (let i = 0; i < p.count; i++) uv.setXY(i, p.getX(i) - u0, p.getZ(i) - v0);
+  return geometry;
+}
+
+/** Thin flat label/decal plane facing +Z (rotate as needed), with a canvas texture. */
+export function decal(width: number, height: number, map: THREE.Texture, transparent = false) {
+  return new THREE.Mesh(
+    new THREE.PlaneGeometry(width, height),
+    new THREE.MeshStandardMaterial({ map, roughness: 0.55, transparent, depthWrite: !transparent, polygonOffset: true, polygonOffsetFactor: -2 }),
+  );
 }
 
 /** Box whose UVs are scaled to metres; `u0`/`v0` offset the pattern per instance. */

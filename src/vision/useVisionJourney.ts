@@ -79,6 +79,17 @@ export function useVisionJourney(rootRef: RefObject<HTMLElement | null>, hostRef
     document.fonts?.ready.then(() => !cancelled && onLayout());
     onLayout();
 
+    // Development-only switch to inspect the static fallback compositions.
+    if (import.meta.env.DEV && new URLSearchParams(window.location.search).has('fallback')) {
+      setStatus('fallback');
+      return () => {
+        cancelled = true;
+        window.removeEventListener('scroll', onScroll);
+        window.removeEventListener('resize', onLayout);
+        resizeObserver.disconnect();
+      };
+    }
+
     import('./createVisionWorld')
       .then(({ createVisionWorld }) => {
         if (cancelled) return;
