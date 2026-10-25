@@ -110,6 +110,19 @@ export const Footer: React.FC<FooterProps> = ({ onNavigate }) => {
             Pianificazione, consegna e gestione di elisuperfici e vertiporti
           </div>
         </div>
+
+        <details className="mt-6 border-t border-white/10 pt-5 text-xs text-white/60">
+          <summary className="font-mono-tech cursor-pointer w-fit py-1 hover:text-white focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-white">Crediti 3D</summary>
+          <div className="mt-4 max-w-3xl space-y-3 leading-relaxed">
+            <p>
+              Modello <a className="underline hover:text-white" href="https://sketchfab.com/3d-models/aw139-chopper-e023735d15b445f0a0b7b250176f894a" target="_blank" rel="noopener noreferrer">Aw139 Chopper</a> di{' '}
+              <a className="underline hover:text-white" href="https://sketchfab.com/Bannerz" target="_blank" rel="noopener noreferrer">Bannerz</a>, con licenza{' '}
+              <a className="underline hover:text-white" href="https://creativecommons.org/licenses/by/4.0/" target="_blank" rel="noopener noreferrer">CC BY 4.0</a>.
+              {' '}Adattato per questa esperienza: materiali, livrea concettuale, gruppi di animazione e ottimizzazione.
+            </p>
+            <p>Illuminazione: <a className="underline hover:text-white" href="https://polyhaven.com/a/studio_small_09" target="_blank" rel="noopener noreferrer">Studio Small 09</a> di Sergej Majboroda / Poly Haven (CC0).</p>
+          </div>
+        </details>
       </div>
     </footer>
   );

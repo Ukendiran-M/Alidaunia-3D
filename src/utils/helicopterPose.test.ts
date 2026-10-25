@@ -61,3 +61,20 @@ test('reverse progress returns state deterministically', () => {
   assert.deepEqual(forwardAt10, backTo10);
   assert.notDeepEqual(forwardAt10, forwardAt50);
 });
+
+test('prepared AW139 pose data contains five independent main blades', () => {
+  assert.equal(ASSEMBLY_GROUPS.filter((g) => /^mainBlade\d+$/.test(g.name)).length, 5);
+  assert.equal(ASSEMBLY_GROUPS.length, 21);
+});
+
+test('out-of-range progress settles at valid scene endpoints', () => {
+  assert.deepEqual(computeAssemblyState(-1), computeAssemblyState(0));
+  assert.deepEqual(computeAssemblyState(2), computeAssemblyState(1));
+});
+
+test('landing gear remains above the floor while components separate', () => {
+  const state = computeAssemblyState(0.47);
+  for (const g of ASSEMBLY_GROUPS.filter((group) => group.name.startsWith('landingGear'))) {
+    assert.ok(state.explosionLift + g.offset[1] * state.groupFactors[g.name] >= 0);
+  }
+});

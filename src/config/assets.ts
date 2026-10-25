@@ -16,37 +16,43 @@ export interface VisualAsset {
 export const BRAND_ASSETS = {
   logo: {
     id: 'brand-logo',
-    url: 'https://alidaunia.it/img/loghi/micro.svg',
+    url: '/brand/alidaunia-logo.svg',
     alt: 'Logo Alidaunia Services',
     referenceOnly: false,
     type: 'vector' as const,
   },
   manifestoStill: {
     id: 'manifesto-hero-still',
-    url: 'https://alidaunia.vercel.app/images/manifesto_alidaunia_hero.png',
+    url: '/brand/manifesto-hero.jpg',
     alt: 'Infrastruttura per volo verticale Alidaunia',
     referenceOnly: true,
     type: 'photo' as const,
   },
   operationsReference: {
     id: 'operations-reference',
-    url: 'https://alidaunia.vercel.app/images/image50.jpeg',
+    url: '/brand/vision-operations.jpeg',
     alt: 'Operazioni e coordinamento di terra per volo verticale',
     referenceOnly: true,
     type: 'photo' as const,
   },
   missionReference: {
     id: 'mission-reference',
-    url: 'https://alidaunia.vercel.app/images/mission_photo.png',
+    url: '/brand/mission-reference.png',
     alt: 'Pianificazione e contesto infrastrutturale',
     referenceOnly: true,
     type: 'photo' as const,
   },
   valuesReference: {
     id: 'values-reference',
-    url: 'https://alidaunia.vercel.app/images/values_photo.png',
+    url: '/brand/values-reference.png',
     alt: 'Infrastruttura e standard operativi per il volo verticale',
     referenceOnly: true,
     type: 'photo' as const,
   },
+} as const;
+
+export const HERO_ASSETS = {
+  model: '/models/aw139-assembly.glb',
+  environment: '/environments/studio_small_09_2k.hdr',
+  mobileEnvironment: '/environments/studio_small_09_1k.hdr',
 } as const;

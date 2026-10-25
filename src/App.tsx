@@ -9,26 +9,18 @@ import { Header } from './components/Header';
 import { Footer } from './components/Footer';
 import { ManifestoPage } from './pages/ManifestoPage';
 import { VisionPage } from './pages/VisionPage';
-import { gsap } from 'gsap';
-import { ScrollTrigger } from 'gsap/ScrollTrigger';
-
-gsap.registerPlugin(ScrollTrigger);
 
 export default function App() {
   const [currentRoute, setCurrentRoute] = useState<AppRoute>(() =>
     normalizePath(window.location.pathname)
   );
 
-  // Synchronize on route changes and kill dangling ScrollTriggers
+  // Each page owns and reverts its own animations during unmount.
   const handleNavigate = useCallback((newRoute: AppRoute) => {
     if (newRoute === currentRoute) {
       window.scrollTo({ top: 0, behavior: 'smooth' });
       return;
     }
-
-    // Kill any existing ScrollTrigger instances before route switch to prevent pin spacing leaks
-    ScrollTrigger.getAll().forEach((trigger) => trigger.kill());
-    ScrollTrigger.clearMatchMedia();
 
     window.history.pushState(null, '', newRoute);
     setCurrentRoute(newRoute);
@@ -38,7 +30,6 @@ export default function App() {
   // Handle browser back and forward history
   useEffect(() => {
     const onPopState = () => {
-      ScrollTrigger.getAll().forEach((trigger) => trigger.kill());
       setCurrentRoute(normalizePath(window.location.pathname));
       window.scrollTo({ top: 0, behavior: 'instant' });
     };

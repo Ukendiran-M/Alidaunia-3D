@@ -88,7 +88,7 @@ export const ManifestoPage: React.FC<ManifestoPageProps> = ({ onNavigate }) => {
   const m6 = MANIFESTO_SECTIONS[5];
 
   return (
-    <div ref={containerRef} className="w-full bg-[#F5F6F7] text-[#081C33] overflow-x-hidden">
+    <div ref={containerRef} className="w-full bg-[#F5F6F7] text-[#081C33]">
       {/* =========================================================================
           SECTION M1: Real Three.js 3D Helicopter Exploded-View and Reassembly Hero
          ========================================================================= */}
