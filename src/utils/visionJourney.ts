@@ -175,9 +175,9 @@ export const CAMERA_KEYS: CameraKey[] = [
   { s: 1.45, pos: [18.4, 0.62, 8.55], target: [21.5, 0.2, 9.0], shift: -0.12 },
   { s: 1 + R, pos: [19.15, 0.56, 8.72], target: [21.5, 0.2, 9.02], shift: -0.12 },
   // V2 → V3: follow the service line to the annex, rise past the stair and through the door jamb.
-  { s: 1.74, pos: [20.2, 1.1, 7.2], target: [22.4, 2.6, -3], shift: -0.04 },
+  { s: 1.755, pos: [20.2, 1.1, 7.2], target: [22.4, 2.6, -3], shift: -0.04 },
   { s: 1.84, pos: [22.3, 2.75, 1.5], target: [22.5, 4.7, -6], shift: 0 },
-  { s: 1.92, pos: [22.6, 5.0, -1.7], target: [21.4, 5.1, -8], shift: 0 },
+  { s: 1.91, pos: [22.6, 5.0, -1.7], target: [21.4, 5.1, -8], shift: 0 },
   { s: 2, pos: [21.9, 5.4, -6.6], target: [18.0, 4.65, -11.6], shift: 0.06 },
   // V3 — planning studio: drift along the drafting surface, resting on each Mission group.
   { s: 2.12, pos: [18.8, 5.62, -10.9], target: [17.2, 4.62, -12.2], shift: 0.12 },
@@ -187,9 +187,9 @@ export const CAMERA_KEYS: CameraKey[] = [
   { s: 2.48, pos: [18.8, 5.6, -15.5], target: [17.2, 4.68, -16.4], shift: 0.12 },
   { s: 2 + R, pos: [18.75, 5.58, -15.95], target: [17.2, 4.66, -16.75], shift: 0.1 },
   // V3 → V4: round the studio's end jamb; the rotor is seen through the glazing, then in the open.
-  { s: 2.76, pos: [17.4, 5.25, -18.5], target: [13.0, 4.5, -15.5], shift: 0.02 },
-  { s: 2.86, pos: [17.1, 5.2, -21.1], target: [10.0, 4.0, -15.0], shift: 0 },
-  { s: 2.94, pos: [14.6, 5.15, -20.6], target: [7.0, 3.6, -12.0], shift: -0.02 },
+  { s: 2.79, pos: [17.4, 5.25, -18.5], target: [13.0, 4.5, -15.5], shift: 0.02 },
+  { s: 2.84, pos: [17.1, 5.2, -21.1], target: [10.0, 4.0, -15.0], shift: 0 },
+  { s: 2.89, pos: [14.6, 5.15, -20.6], target: [7.0, 3.6, -12.0], shift: -0.02 },
   { s: 3, pos: aroundHub(-40, 8.4, 5.4), target: [H[0], 3.2, H[2] - 0.4], shift: -0.1 },
   // V4 — rotor head: a measured ~30° arc at a stable reading distance.
   { s: 3.15, pos: aroundHub(-8, 4.75, 5.4), target: [H[0] - 0.3, 3.0, H[2] - 0.6], shift: -0.2 },
@@ -199,11 +199,11 @@ export const CAMERA_KEYS: CameraKey[] = [
   // V4 → V5: alongside, then beneath blade 01 towards the briefing room's glazed door.
   // V4 → V5: drop below the rotor plane beside blade 01, so its silhouette crosses the top of the frame,
   // then pass beneath it towards the briefing room's glazed door.
-  { s: 3.67, pos: aroundHub(15, 4.2, 4.7), target: alongBlade(3.6, 0, 3.0), shift: -0.14 },
-  { s: 3.73, pos: aroundHub(5, 4.6, 3.9), target: alongBlade(6.5, -1.2, 2.6), shift: -0.05 },
-  { s: 3.8, pos: alongBlade(4.5, 1.55, 2.3), target: [17.0, 2.2, -13.2], shift: 0 },
-  { s: 3.87, pos: alongBlade(4.85, -0.05, 2.2), target: [17.6, 1.7, -13.4], shift: 0 },
-  { s: 3.94, pos: alongBlade(5.0, -1.7, 1.95), target: [19.2, 1.2, -14.4], shift: 0 },
+  { s: 3.685, pos: aroundHub(15, 4.2, 4.7), target: alongBlade(3.6, 0, 3.0), shift: -0.14 },
+  { s: 3.75, pos: aroundHub(5, 4.6, 3.9), target: alongBlade(6.5, -1.2, 2.6), shift: -0.05 },
+  { s: 3.82, pos: alongBlade(4.5, 1.55, 2.3), target: [17.0, 2.2, -13.2], shift: 0 },
+  { s: 3.86, pos: alongBlade(4.85, -0.05, 2.2), target: [17.6, 1.7, -13.4], shift: 0 },
+  { s: 3.895, pos: alongBlade(5.0, -1.7, 1.95), target: [19.2, 1.2, -14.4], shift: 0 },
   { s: 4, pos: [15.0, 1.72, -12.7], target: [20.0, 0.95, -15.4], shift: 0.02 },
   // V5 — briefing room: a gentle arc around the desk corner, revealing the aircraft bay.
   { s: 4.12, pos: aroundDossier(134, 2.4, 1.55), target: [D[0], 0.8, D[2]], shift: 0.08 },
@@ -211,10 +211,10 @@ export const CAMERA_KEYS: CameraKey[] = [
   { s: 4.45, pos: aroundDossier(64, 1.7, 1.48), target: [D[0] - 0.12, 0.82, D[2] - 0.12], shift: 0.14 },
   { s: 4 + R, pos: aroundDossier(42, 1.7, 1.5), target: [D[0] - 0.2, 0.84, D[2] - 0.18], shift: 0.14 },
   // V5 → V6: out through the glazed front door; the roof's shade recedes into daylight.
-  { s: 4.71, pos: [21.9, 1.62, -12.9], target: [19.6, 1.2, -10.5], shift: 0.08 },
-  { s: 4.79, pos: [21.5, 1.8, -8.8], target: [20.6, 1.9, -1], shift: 0.04 },
-  { s: 4.87, pos: [20.6, 1.95, -4.0], target: [17.5, 2.5, 6], shift: 0 },
-  { s: 4.94, pos: [18.6, 2.5, 2.6], target: [10.5, 3.0, 0], shift: 0.04 },
+  { s: 4.7, pos: [21.9, 1.62, -12.9], target: [19.6, 1.2, -10.5], shift: 0.08 },
+  { s: 4.76, pos: [21.5, 1.8, -8.8], target: [20.6, 1.9, -1], shift: 0.04 },
+  { s: 4.805, pos: [20.6, 1.95, -4.0], target: [17.5, 2.5, 6], shift: 0 },
+  { s: 4.93, pos: [18.6, 2.5, 2.6], target: [10.5, 3.0, 0], shift: 0.04 },
   { s: 5, pos: [17.1, 3.0, 8.0], target: [6.6, 3.35, -6], shift: 0.08 },
   // V6 — the apron: pull back and rise once, then hold completely still.
   { s: 5.4, pos: [15.2, 3.4, 13.5], target: [5.4, 3.9, -7.5], shift: 0.12 },
@@ -321,6 +321,32 @@ export function normalizeMarks(raw: JourneyMark[]): JourneyMark[] {
     if (prev && mark.s === prev.s) continue;
     out.push({ s: mark.s, scroll: prev ? Math.max(mark.scroll, prev.scroll + 1) : mark.scroll });
   }
+  return out;
+}
+
+export interface MeasuredMark extends JourneyMark {
+  /** Minimum scroll distance after the previous mark, as a fraction of the visible height. */
+  minGap?: number;
+}
+
+/**
+ * Turns DOM-measured marks into the scroll mapping: ordered, strictly
+ * increasing, honouring each mark's minimum distance from the previous one,
+ * and never beyond the document's maximum scroll position — so the final
+ * pose is always reachable while its content is still on screen.
+ */
+export function resolveMarks(raw: MeasuredMark[], view: number, maxScroll: number): JourneyMark[] {
+  const sorted = [...raw].sort((a, b) => a.s - b.s).filter((m, i, list) => i === 0 || m.s !== list[i - 1].s);
+  const out: JourneyMark[] = [];
+  sorted.forEach((mark, i) => {
+    const prev = out[out.length - 1];
+    let scroll = mark.scroll;
+    if (prev) scroll = Math.max(scroll, prev.scroll + Math.max(1, (mark.minGap ?? 0) * view));
+    // Leave room for the marks that follow, then stay within the document.
+    scroll = Math.min(scroll, maxScroll - (sorted.length - 1 - i));
+    if (prev) scroll = Math.max(scroll, prev.scroll + 1);
+    out.push({ s: mark.s, scroll });
+  });
   return out;
 }
 

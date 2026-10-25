@@ -40,52 +40,69 @@
 .vj-chapter { position: relative; z-index: 1; }
 .vj-chapter[data-tone='dark'] {
   --vj-ink: #f5f6f7;
-  --vj-ink-soft: rgba(245, 246, 247, 0.84);
-  --vj-ink-faint: rgba(245, 246, 247, 0.66);
-  --vj-accent: #c9dbef;
-  --vj-rule: rgba(245, 246, 247, 0.22);
-  --vj-shade: rgba(8, 28, 51, 0.88);
-  --vj-shade-mid: rgba(8, 28, 51, 0.7);
+  --vj-ink-soft: #e6ecf2;
+  --vj-ink-faint: #c3cfdc;
+  --vj-accent: #cfe0f2;
+  --vj-rule: rgba(245, 246, 247, 0.26);
+  --vj-shade: rgba(8, 28, 51, 0.8);
+  --vj-shade-mid: rgba(8, 28, 51, 0.46);
   color: var(--vj-ink);
 }
 .vj-chapter[data-tone='light'] {
   --vj-ink: #081c33;
-  --vj-ink-soft: rgba(8, 28, 51, 0.84);
-  --vj-ink-faint: rgba(8, 28, 51, 0.66);
+  --vj-ink-soft: #14283f;
+  --vj-ink-faint: #3a4b5f;
   --vj-accent: #0b4584;
-  --vj-rule: rgba(8, 28, 51, 0.16);
-  --vj-shade: rgba(245, 246, 247, 0.9);
-  --vj-shade-mid: rgba(245, 246, 247, 0.6);
+  --vj-rule: rgba(8, 28, 51, 0.2);
+  --vj-shade: rgba(245, 246, 247, 0.86);
+  --vj-shade-mid: rgba(245, 246, 247, 0.5);
   color: var(--vj-ink);
 }
 
 .vj-frame {
+  --vj-band-solid: 44%;
+  --vj-band-end: 66%;
+  --vj-band-feather: clamp(40px, 8vh, 96px);
+  position: relative;
   width: min(100%, 1376px);
   margin: 0 auto;
-  padding: clamp(56px, 11vh, 128px) 48px clamp(40px, 8vh, 96px);
+  padding: clamp(40px, 7vh, 88px) 48px clamp(32px, 5vh, 64px);
+}
+/* One coherent reading support per chapter: a feathered, full-bleed tonal band on the copy side,
+   only as tall as the chapter's text (never over the scenic transition intervals). */
+.vj-frame::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: calc(50% - 50vw);
+  width: 100vw;
+  z-index: -1;
+  pointer-events: none;
+  background: linear-gradient(90deg, var(--vj-shade) 0%, var(--vj-shade) var(--vj-band-solid), var(--vj-shade-mid) calc((var(--vj-band-solid) + var(--vj-band-end)) / 2), transparent var(--vj-band-end));
+  -webkit-mask-image: linear-gradient(180deg, transparent 0, #000 var(--vj-band-feather), #000 calc(100% - var(--vj-band-feather)), transparent 100%);
+  mask-image: linear-gradient(180deg, transparent 0, #000 var(--vj-band-feather), #000 calc(100% - var(--vj-band-feather)), transparent 100%);
+}
+.vj-frame--right::before {
+  background: linear-gradient(270deg, var(--vj-shade) 0%, var(--vj-shade) var(--vj-band-solid), var(--vj-shade-mid) calc((var(--vj-band-solid) + var(--vj-band-end)) / 2), transparent var(--vj-band-end));
 }
 .vj-frame--hero {
+  --vj-band-solid: 50%;
+  --vj-band-end: 70%;
   min-height: var(--vj-view);
   display: flex;
   flex-direction: column;
   justify-content: space-between;
   gap: 40px;
   padding-top: clamp(32px, 7vh, 88px);
-  padding-bottom: 28px;
+  /* Keeps the scroll cue above the band's lower feather. */
+  padding-bottom: clamp(64px, 9vh, 104px);
 }
 
-/* Copy sits in negative space with local tonal shading — never a card. */
+/* Copy sits in negative space over the chapter's reading band — never a card. */
 .vj-copy { position: relative; max-width: 39rem; }
-.vj-copy::before {
-  content: '';
-  position: absolute;
-  inset: -26% -34% -26% -38%;
-  z-index: -1;
-  pointer-events: none;
-  background: radial-gradient(closest-side, var(--vj-shade) 0%, var(--vj-shade-mid) 58%, transparent 100%);
-}
 .vj-copy--right { margin-left: auto; }
-.vj-copy--follow { margin-top: clamp(64px, 16vh, 168px); }
+.vj-copy--follow { margin-top: clamp(48px, 7vh, 96px); }
 
 .vj-pill {
   display: inline-flex;
@@ -94,18 +111,18 @@
   padding: 5px 12px;
   border: 1px solid rgba(255, 255, 255, 0.18);
   background: rgba(255, 255, 255, 0.07);
-  font-size: 12px;
+  font-size: 12.5px;
   letter-spacing: 0.14em;
   text-transform: uppercase;
-  color: rgba(245, 246, 247, 0.92);
+  color: #f5f6f7;
 }
 .vj-pill > span, .vj-kicker > span { width: 7px; height: 7px; border-radius: 50%; background: #e31e24; flex: none; }
 .vj-kicker {
   display: inline-flex;
   align-items: center;
   gap: 9px;
-  font-size: 12px;
-  font-weight: 600;
+  font-size: 12.5px;
+  font-weight: 700;
   letter-spacing: 0.16em;
   text-transform: uppercase;
   color: var(--vj-accent);
@@ -135,53 +152,56 @@
   font-weight: 500;
   color: var(--vj-accent);
 }
-.vj-chapter[data-tone='dark'] .vj-subtitle { color: rgba(245, 246, 247, 0.92); font-weight: 400; }
-.vj-body { margin-top: 24px; display: grid; gap: 14px; font-size: clamp(16px, 1.15vw, 18px); line-height: 1.7; color: var(--vj-ink-soft); }
-.vj-body--split { max-width: 48rem; grid-template-columns: 1fr 1fr; gap: 28px; }
-.vj-frame--hero .vj-copy { max-width: 52rem; }
-.vj-body-text { margin-top: 12px; font-size: clamp(16px, 1.1vw, 17.5px); line-height: 1.7; color: var(--vj-ink-soft); }
+.vj-chapter[data-tone='dark'] .vj-subtitle { color: #f5f6f7; font-weight: 450; }
+.vj-body { margin-top: 24px; display: grid; gap: 16px; font-size: clamp(17px, 0.5vw + 11px, 19.5px); font-weight: 450; line-height: 1.65; color: var(--vj-ink-soft); }
+/* V1: one column that stays inside the reading band, clear of the aircraft. */
+.vj-body--split { max-width: 37rem; }
+.vj-frame--hero .vj-copy { max-width: 40rem; }
+.vj-body-text { margin-top: 12px; font-size: clamp(17px, 0.5vw + 11px, 19px); font-weight: 450; line-height: 1.65; color: var(--vj-ink-soft); }
 .vj-subhead { font-size: clamp(24px, 2.2vw, 31px); font-weight: 700; line-height: 1.2; }
 
 .vj-hero-foot {
   display: flex;
   align-items: center;
-  justify-content: space-between;
-  gap: 16px;
+  gap: 16px 40px;
+  flex-wrap: wrap;
+  max-width: 40rem;
   padding-top: 20px;
   border-top: 1px solid rgba(245, 246, 247, 0.18);
-  font-size: 12px;
-  color: rgba(245, 246, 247, 0.72);
+  font-size: 12.5px;
+  color: #d5dee8;
 }
-.vj-hero-foot a { display: inline-flex; align-items: center; gap: 8px; color: rgba(245, 246, 247, 0.9); }
+.vj-hero-foot a { display: inline-flex; align-items: center; gap: 8px; color: #f5f6f7; }
 .vj-hero-foot a:hover { color: #fff; }
 .vj-hero-foot a:focus-visible, .vj-chapter[data-tone='dark'] a:focus-visible { outline-color: #fff; }
 
-.vj-checks { margin-top: 18px; padding-top: 16px; border-top: 1px solid var(--vj-rule); display: grid; gap: 10px; font-size: 15px; color: var(--vj-ink-soft); }
+.vj-checks { margin-top: 18px; padding-top: 16px; border-top: 1px solid var(--vj-rule); display: grid; gap: 12px; font-size: 17px; font-weight: 450; line-height: 1.5; color: var(--vj-ink-soft); }
 .vj-checks li { display: flex; gap: 10px; align-items: flex-start; }
-.vj-checks svg { margin-top: 3px; flex: none; color: var(--vj-accent); }
+.vj-checks svg { margin-top: 4px; flex: none; color: var(--vj-accent); }
 
 /* V3: three groups, paced by real measurements. */
-.vj-groups { display: grid; gap: clamp(140px, 30vh, 320px); margin-top: clamp(120px, 28vh, 300px); }
+.vj-groups { display: grid; gap: clamp(56px, 9vh, 112px); margin-top: clamp(56px, 9vh, 112px); }
 .vj-group__head { display: grid; gap: 4px; padding-bottom: 16px; border-bottom: 1px solid var(--vj-rule); }
-.vj-group__badge { font-size: 12px; font-weight: 700; letter-spacing: 0.16em; color: #c4171d; }
-.vj-group__count { font-size: 11.5px; letter-spacing: 0.08em; color: var(--vj-ink-faint); }
-.vj-points { display: grid; gap: 22px; margin-top: 22px; }
+.vj-group__badge { font-size: 12.5px; font-weight: 700; letter-spacing: 0.16em; color: #b8141a; }
+.vj-group__count { font-size: 12.5px; font-weight: 600; letter-spacing: 0.08em; color: var(--vj-ink-faint); }
+.vj-points { display: grid; gap: 26px; margin-top: 24px; }
 .vj-points li { display: grid; gap: 4px; }
-.vj-points__number { font-size: 11.5px; font-weight: 700; letter-spacing: 0.1em; color: var(--vj-accent); }
-.vj-points h4 { font-size: 19px; font-weight: 700; line-height: 1.3; }
-.vj-points p { font-size: 16px; line-height: 1.65; color: var(--vj-ink-soft); }
+.vj-points__number { font-size: 12.5px; font-weight: 700; letter-spacing: 0.1em; color: var(--vj-accent); }
+.vj-points h4 { font-family: 'Space Grotesk', system-ui, sans-serif; font-size: clamp(20px, 1.4vw, 23px); font-weight: 700; line-height: 1.25; }
+.vj-points p { font-size: clamp(17px, 0.4vw + 12px, 18.5px); font-weight: 450; line-height: 1.62; color: var(--vj-ink-soft); }
 
 /* V4: four values in flow; the vault folds while each is read. */
-.vj-pillars { display: grid; gap: clamp(110px, 24vh, 260px); margin-top: clamp(110px, 24vh, 260px); }
-.vj-pillar__index { font-size: 11.5px; letter-spacing: 0.16em; color: var(--vj-ink-faint); }
+.vj-pillars { display: grid; gap: clamp(56px, 9vh, 112px); margin-top: clamp(56px, 9vh, 112px); }
+.vj-pillar__index { font-size: 12.5px; font-weight: 600; letter-spacing: 0.16em; color: var(--vj-ink-faint); }
 .vj-pillar__title { margin-top: 6px; font-size: clamp(32px, 3.4vw, 46px); font-weight: 700; line-height: 1.08; }
 .vj-pillar__focus {
   margin-top: 10px;
   padding-bottom: 12px;
   border-bottom: 1px solid var(--vj-rule);
-  font-size: 12.5px;
-  font-weight: 600;
-  letter-spacing: 0.08em;
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.07em;
+  line-height: 1.5;
   text-transform: uppercase;
   color: var(--vj-accent);
 }
@@ -191,16 +211,17 @@
 .vj-entities li { display: grid; gap: 2px; padding-left: 18px; border-left: 3px solid #0b4584; }
 .vj-entities li:nth-child(2) { border-left-color: #e31e24; }
 .vj-entities li:nth-child(3) { border-left-color: #081c33; }
-.vj-entities span { font-size: 11.5px; font-weight: 700; letter-spacing: 0.12em; color: var(--vj-accent); }
+.vj-entities span { font-size: 12.5px; font-weight: 700; letter-spacing: 0.12em; color: var(--vj-accent); }
 .vj-entities h3 { font-size: 26px; font-weight: 700; }
-.vj-entities p { font-size: 16px; line-height: 1.6; color: var(--vj-ink-soft); }
-.vj-values__label { font-size: 12px; font-weight: 600; letter-spacing: 0.16em; color: var(--vj-ink-faint); }
+.vj-entities p { font-size: clamp(17px, 0.4vw + 12px, 18.5px); font-weight: 450; line-height: 1.6; color: var(--vj-ink-soft); }
+.vj-values__label { font-size: 12.5px; font-weight: 700; letter-spacing: 0.16em; color: var(--vj-ink-faint); }
 .vj-values { display: grid; grid-template-columns: 1fr 1fr; gap: 26px 32px; margin-top: 20px; }
 .vj-values h4 { font-family: 'Space Grotesk', system-ui, sans-serif; font-size: 20px; font-weight: 700; padding-bottom: 6px; border-bottom: 2px solid #0b4584; }
-.vj-values p { margin-top: 8px; font-size: 15.5px; line-height: 1.62; color: var(--vj-ink-soft); }
+.vj-values p { margin-top: 10px; font-size: 17px; font-weight: 450; line-height: 1.6; color: var(--vj-ink-soft); }
 
 /* V6 */
-.vj-chapter--last .vj-frame { padding-bottom: 80svh; }
+/* Normal spacing to the footer (which has its own accent line and padding); no scenic-only tail. */
+.vj-chapter--last .vj-frame { padding-bottom: clamp(48px, 6vh, 72px); }
 .vj-callout {
   position: relative;
   max-width: 39rem;
@@ -212,7 +233,7 @@
 }
 .vj-callout__tag { display: inline-block; padding: 4px 12px; background: #e31e24; font-size: 12px; font-weight: 700; letter-spacing: 0.06em; }
 .vj-callout h3 { margin-top: 20px; font-size: clamp(26px, 2.6vw, 36px); font-weight: 700; line-height: 1.15; }
-.vj-callout p { margin-top: 16px; font-size: 16px; line-height: 1.65; color: rgba(255, 255, 255, 0.82); }
+.vj-callout p { margin-top: 16px; font-size: clamp(17px, 0.4vw + 12px, 18.5px); font-weight: 450; line-height: 1.62; color: #e6ecf2; }
 .vj-callout__actions { margin-top: 26px; display: flex; flex-wrap: wrap; gap: 14px; }
 .vj-callout a:focus-visible, .vj-callout button:focus-visible { outline-color: #fff; }
 .vj-button {
@@ -221,7 +242,7 @@
   justify-content: center;
   gap: 10px;
   padding: 16px 28px;
-  font-size: 12px;
+  font-size: 12.5px;
   font-weight: 600;
   letter-spacing: 0.06em;
   text-transform: uppercase;
@@ -233,25 +254,26 @@
 .vj-button--secondary:hover { border-color: #fff; }
 .vj-settle { height: 1px; }
 
-/* Transition intervals: the copy has left; the environment moves. */
-.vj-passage { height: 95svh; }
+/* Transition intervals, sized per boundary from the page (--vj-passage, in visible heights). */
+/* On very short screens a floor keeps the camera's travel from being compressed into a few wheel steps. */
+.vj-passage { height: max(calc(var(--vj-view) * var(--vj-passage, 0.72)), 300px); }
 
-@media (max-width: 1023px) {
-  .vj-body--split { grid-template-columns: 1fr; gap: 14px; }
-}
 
 @media (max-width: 767px) {
   .vj-frame { padding: 48px 24px 40px; }
-  .vj-frame--hero { padding-top: 32px; padding-bottom: 20px; }
+  .vj-frame--hero { padding-top: 32px; padding-bottom: 56px; }
   .vj-copy, .vj-callout { max-width: none; }
   .vj-copy--right { margin-left: 0; }
-  .vj-copy::before { inset: -40px -24px; background: linear-gradient(180deg, transparent 0%, var(--vj-shade-mid) 12%, var(--vj-shade) 30%, var(--vj-shade) 70%, var(--vj-shade-mid) 88%, transparent 100%); }
+  /* Text spans the width on phones: the band covers it evenly, still only over the chapter's text. */
+  .vj-frame, .vj-frame--hero { --vj-band-solid: 100%; --vj-band-end: 100%; --vj-band-feather: 40px; }
+  .vj-chapter--last .vj-frame { padding-bottom: 40px; }
   .vj-display { font-size: clamp(36px, 10.5vw, 54px); margin-top: 20px; }
   .vj-values { grid-template-columns: 1fr; }
-  .vj-hero-foot { font-size: 11px; }
+  .vj-hero-foot { font-size: 12px; }
   .vj-hero-foot > span { display: none; }
-  .vj-passage { height: 70svh; }
-  .vj-groups, .vj-pillars { gap: 96px; margin-top: 96px; }
+  .vj-groups, .vj-pillars { gap: 64px; margin-top: 64px; }
+  /* Shorter screens and travel on phones: the same per-boundary balance, slightly tighter. */
+  .vj-passage { height: max(calc(var(--vj-view) * var(--vj-passage, 0.72) * 0.88), 300px); }
 }
 
 @media (max-height: 600px) and (min-width: 768px) {
@@ -261,5 +283,6 @@
 
 @media (prefers-reduced-motion: reduce) {
   .vj-backdrop__canvas { transition: none; }
-  .vj-passage { height: 45svh; }
+  /* Still compositions cut between chapters: only a short breathing space is needed. */
+  .vj-passage { height: calc(var(--vj-view) * 0.3); }
 }

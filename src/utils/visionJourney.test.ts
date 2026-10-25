@@ -13,6 +13,7 @@ import {
   drawingState,
   fixtureLight,
   normalizeMarks,
+  resolveMarks,
   readingWeight,
   sampleAtmosphere,
   sampleCamera,
@@ -286,4 +287,17 @@ test('exposure adapts continuously between interior and daylight', () => {
     const b = sampleAtmosphere(s + 0.001);
     assert.ok(Math.abs(a.exposure - b.exposure) < 0.002);
   }
+});
+
+test('measured marks keep the final pose reachable and respect a local minimum distance', () => {
+  const view = 800;
+  // The settle mark sits only 50 px after the V6 mark: it is moved to the 0.25-view minimum.
+  const near = resolveMarks([{ s: 5, scroll: 1000 }, { s: 6, scroll: 1050, minGap: 0.25 }], view, 5000);
+  assert.equal(near[1].scroll, 1200);
+  // A settle mark beyond the end of the document is pulled back so it can be reached.
+  const far = resolveMarks([{ s: 5, scroll: 1000 }, { s: 6, scroll: 1900, minGap: 0.25 }], view, 1500);
+  assert.equal(far[1].scroll, 1500);
+  // Earlier marks are untouched by the cap, and order stays strictly increasing.
+  const marks = resolveMarks([{ s: 0, scroll: 0 }, { s: 1, scroll: 900 }, { s: 6, scroll: 4000 }], view, 2000);
+  assert.deepEqual(marks.map((m) => m.scroll), [0, 900, 2000]);
 });

@@ -30,9 +30,25 @@ const V5_ENTITIES = [
   { label: 'ENTITÀ 03', name: 'Gestione', text: 'Manutenzione continua, protocolli HEMS, supporto operativo.' },
 ];
 
-/** The scene keeps playing below the copy: one transition interval per chapter boundary. */
+/**
+ * Transition length per boundary, in visible heights, scaled to that boundary's camera work
+ * (V1→V2 19.5 m / 150°, V2→V3 17.2 m / 146°, V3→V4 14.2 m / 91°, V4→V5 12.2 m / 161°,
+ * V5→V6 23.5 m / 262°). The transition starts  as the outgoing copy reaches 35 % of the view and
+ * ends as the incoming chapter's top reaches 28 %, so the next heading rises in during the handoff.
+ */
+const TRANSITION_LENGTH = [0.85, 0.9, 0.72, 0.78, 0.92];
+const START_LINE = 0.35;
+const INCOMING_LINE = 0.28;
+
+/** The spacer under each chapter: only what its transition needs beyond the two lines above. */
 const Passage: React.FC<{ chapter: number }> = ({ chapter }) => (
-  <div className="vj-passage" data-journey-mark={chapter + READ_END} data-journey-line="0.35" aria-hidden="true" />
+  <div
+    className="vj-passage"
+    style={{ '--vj-passage': TRANSITION_LENGTH[chapter] - (START_LINE - INCOMING_LINE) } as React.CSSProperties}
+    data-journey-mark={chapter + READ_END}
+    data-journey-line={START_LINE}
+    aria-hidden="true"
+  />
 );
 
 const Kicker: React.FC<{ children: React.ReactNode }> = ({ children }) => (
@@ -88,8 +104,8 @@ export const VisionPage: React.FC<VisionPageProps> = ({ onNavigate }) => {
       </section>
 
       {/* V2 — board-formed concrete gallery */}
-      <section id="v2" className="vj-chapter" data-tone="light" data-journey-mark="1" aria-labelledby="v2-title">
-        <div className="vj-frame">
+      <section id="v2" className="vj-chapter" data-tone="light" data-journey-mark="1" data-journey-line={INCOMING_LINE} aria-labelledby="v2-title">
+        <div className="vj-frame vj-frame--right">
           <div className="vj-copy vj-copy--right">
             <Kicker>{v2.kicker}</Kicker>
             <h2 id="v2-title" className="vj-title">{v2.title}</h2>
@@ -120,7 +136,7 @@ export const VisionPage: React.FC<VisionPageProps> = ({ onNavigate }) => {
       </section>
 
       {/* V3 — seven glazed thresholds in three reading zones (3 + 2 + 2) */}
-      <section id="v3" className="vj-chapter" data-tone="light" data-journey-mark="2" aria-labelledby="v3-title">
+      <section id="v3" className="vj-chapter" data-tone="light" data-journey-mark="2" data-journey-line={INCOMING_LINE} aria-labelledby="v3-title">
         <div className="vj-frame">
           <div className="vj-copy">
             <Kicker>{v3.kicker}</Kicker>
@@ -162,8 +178,8 @@ export const VisionPage: React.FC<VisionPageProps> = ({ onNavigate }) => {
       </section>
 
       {/* V4 — carbon-composite precision vault: four calibrated folds */}
-      <section id="v4" className="vj-chapter" data-tone="dark" data-journey-mark="3" aria-labelledby="v4-title">
-        <div className="vj-frame">
+      <section id="v4" className="vj-chapter" data-tone="dark" data-journey-mark="3" data-journey-line={INCOMING_LINE} aria-labelledby="v4-title">
+        <div className="vj-frame vj-frame--right">
           <div className="vj-copy vj-copy--right">
             <Kicker>{v4.kicker}</Kicker>
             <h2 id="v4-title" className="vj-title">{v4.title}</h2>
@@ -193,7 +209,7 @@ export const VisionPage: React.FC<VisionPageProps> = ({ onNavigate }) => {
       </section>
 
       {/* V5 — one tensile canopy held by Cliente, Progetto and Gestione */}
-      <section id="v5" className="vj-chapter" data-tone="light" data-journey-mark="4" aria-labelledby="v5-title">
+      <section id="v5" className="vj-chapter" data-tone="light" data-journey-mark="4" data-journey-line={INCOMING_LINE} aria-labelledby="v5-title">
         <div className="vj-frame">
           <div className="vj-copy">
             <Kicker>{v5.kicker}</Kicker>
@@ -231,7 +247,7 @@ export const VisionPage: React.FC<VisionPageProps> = ({ onNavigate }) => {
       </section>
 
       {/* V6 — luminous ceramic horizon and enquiry */}
-      <section id="v6" className="vj-chapter vj-chapter--last" data-tone="light" data-journey-mark="5" aria-labelledby="v6-title">
+      <section id="v6" className="vj-chapter vj-chapter--last" data-tone="light" data-journey-mark="5" data-journey-line={INCOMING_LINE} aria-labelledby="v6-title">
         <div className="vj-frame">
           <div className="vj-copy">
             <Kicker>{v6.kicker}</Kicker>
@@ -267,7 +283,8 @@ export const VisionPage: React.FC<VisionPageProps> = ({ onNavigate }) => {
               </button>
             </div>
           </div>
-          <div className="vj-settle" data-journey-mark="6" data-journey-line="0.6" aria-hidden="true" />
+          {/* The final pose settles as the end of the contact panel comes fully into view (not after it). */}
+          <div className="vj-settle" data-journey-mark="6" data-journey-line="0.92" data-journey-min="0.25" aria-hidden="true" />
         </div>
       </section>
     </div>

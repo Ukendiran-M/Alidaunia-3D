@@ -10,7 +10,7 @@
 import { useEffect, useState, type RefObject } from 'react';
 import {
   chapterAt,
-  normalizeMarks,
+  resolveMarks,
   scrollToJourney,
   stillJourney,
   type JourneyMark,
@@ -39,11 +39,15 @@ export function useVisionJourney(rootRef: RefObject<HTMLElement | null>, hostRef
       const header = document.querySelector('header');
       const headerHeight = header ? header.getBoundingClientRect().height : 0;
       const view = window.innerHeight - headerHeight;
-      marks = normalizeMarks(
+      const maxScroll = document.documentElement.scrollHeight - window.innerHeight;
+      marks = resolveMarks(
         Array.from(root.querySelectorAll<HTMLElement>('[data-journey-mark]')).map((el) => ({
           s: Number(el.dataset.journeyMark),
           scroll: el.getBoundingClientRect().top + window.scrollY - headerHeight - Number(el.dataset.journeyLine ?? 0) * view,
+          minGap: el.dataset.journeyMin ? Number(el.dataset.journeyMin) : undefined,
         })),
+        view,
+        maxScroll,
       );
     };
 
@@ -72,11 +76,28 @@ export function useVisionJourney(rootRef: RefObject<HTMLElement | null>, hostRef
       measure();
       update(true);
     };
+    // Direct entry with a fragment (e.g. /vision-mission-valori#v6): the sections are rendered by
+    // React after the browser's own fragment scroll, so honour the anchor once they exist — and
+    // once more after fonts settle, unless the reader has already moved.
+    const anchor = window.location.hash ? document.getElementById(decodeURIComponent(window.location.hash.slice(1))) : null;
+    let anchoredAt = -1;
+    const toAnchor = () => {
+      if (!anchor || !root.contains(anchor)) return;
+      if (anchoredAt >= 0 && Math.abs(window.scrollY - anchoredAt) > 2) return;
+      anchor.scrollIntoView({ block: 'start' });
+      anchoredAt = window.scrollY;
+    };
+
     window.addEventListener('scroll', onScroll, { passive: true });
     window.addEventListener('resize', onLayout);
     const resizeObserver = new ResizeObserver(onLayout);
     resizeObserver.observe(root);
-    document.fonts?.ready.then(() => !cancelled && onLayout());
+    document.fonts?.ready.then(() => {
+      if (cancelled) return;
+      toAnchor();
+      onLayout();
+    });
+    toAnchor();
     onLayout();
 
     // Development-only switch to inspect the static fallback compositions.
