@@ -1,0 +1,263 @@
+{
+  "passed": true,
+  "cases": [
+    {
+      "case": "desktop",
+      "passed": true,
+      "range": {
+        "start": -0.001,
+        "end": 3161,
+        "canvas": 1,
+        "pins": 1,
+        "stageHeight": 903,
+        "overflow": 0
+      },
+      "chapterLink": {
+        "top": 116.796875,
+        "header": 97
+      }
+    },
+    {
+      "case": "mobile",
+      "passed": true,
+      "range": {
+        "start": -0.001,
+        "end": 1831,
+        "canvas": 1,
+        "pins": 1,
+        "stageHeight": 763,
+        "overflow": 0
+      }
+    },
+    {
+      "case": "reduced-motion",
+      "passed": true,
+      "range": {
+        "start": 0,
+        "end": 0,
+        "canvas": 1,
+        "pins": 0,
+        "stageHeight": 763,
+        "overflow": 0
+      }
+    },
+    {
+      "case": "landscape",
+      "passed": true,
+      "range": {
+        "start": -0.001,
+        "end": 1026,
+        "canvas": 1,
+        "pins": 1,
+        "stageHeight": 293,
+        "overflow": 0
+      }
+    },
+    {
+      "case": "late-load-navigation",
+      "passed": true
+    },
+    {
+      "case": "model-error-fallback",
+      "passed": true
+    }
+  ],
+  "pageErrors": [],
+  "network": [
+    {
+      "case": "desktop",
+      "url": "/brand/vision-operations.jpeg",
+      "status": 200
+    },
+    {
+      "case": "desktop",
+      "url": "/brand/alidaunia-logo.svg",
+      "status": 200
+    },
+    {
+      "case": "desktop",
+      "url": "/models/aw139-assembly.glb",
+      "status": 200
+    },
+    {
+      "case": "desktop",
+      "url": "/environments/studio_small_09_2k.hdr",
+      "status": 200
+    },
+    {
+      "case": "desktop",
+      "url": "/brand/mission-reference.png",
+      "status": 200
+    },
+    {
+      "case": "desktop",
+      "url": "/brand/values-reference.png",
+      "status": 200
+    },
+    {
+      "case": "desktop",
+      "url": "/models/aw139-assembly.glb",
+      "status": 200
+    },
+    {
+      "case": "desktop",
+      "url": "/environments/studio_small_09_2k.hdr",
+      "status": 200
+    },
+    {
+      "case": "mobile",
+      "url": "/brand/alidaunia-logo.svg",
+      "status": 304
+    },
+    {
+      "case": "mobile",
+      "url": "/brand/vision-operations.jpeg",
+      "status": 304
+    },
+    {
+      "case": "mobile",
+      "url": "/models/aw139-assembly.glb",
+      "status": 200
+    },
+    {
+      "case": "mobile",
+      "url": "/environments/studio_small_09_1k.hdr",
+      "status": 200
+    },
+    {
+      "case": "mobile",
+      "url": "/brand/mission-reference.png",
+      "status": 200
+    },
+    {
+      "case": "mobile",
+      "url": "/brand/values-reference.png",
+      "status": 200
+    },
+    {
+      "case": "mobile",
+      "url": "/models/aw139-assembly.glb",
+      "status": 200
+    },
+    {
+      "case": "mobile",
+      "url": "/environments/studio_small_09_1k.hdr",
+      "status": 200
+    },
+    {
+      "case": "reduced-motion",
+      "url": "/brand/alidaunia-logo.svg",
+      "status": 304
+    },
+    {
+      "case": "reduced-motion",
+      "url": "/brand/vision-operations.jpeg",
+      "status": 304
+    },
+    {
+      "case": "reduced-motion",
+      "url": "/models/aw139-assembly.glb",
+      "status": 200
+    },
+    {
+      "case": "reduced-motion",
+      "url": "/environments/studio_small_09_1k.hdr",
+      "status": 200
+    },
+    {
+      "case": "landscape",
+      "url": "/brand/alidaunia-logo.svg",
+      "status": 304
+    },
+    {
+      "case": "landscape",
+      "url": "/brand/vision-operations.jpeg",
+      "status": 304
+    },
+    {
+      "case": "landscape",
+      "url": "/models/aw139-assembly.glb",
+      "status": 200
+    },
+    {
+      "case": "landscape",
+      "url": "/environments/studio_small_09_2k.hdr",
+      "status": 200
+    },
+    {
+      "case": "late-load-navigation",
+      "url": "/brand/alidaunia-logo.svg",
+      "status": 200
+    },
+    {
+      "case": "late-load-navigation",
+      "url": "/brand/vision-operations.jpeg",
+      "status": 200
+    },
+    {
+      "case": "late-load-navigation",
+      "url": "/environments/studio_small_09_2k.hdr",
+      "status": 200
+    },
+    {
+      "case": "late-load-navigation",
+      "url": "/brand/mission-reference.png",
+      "status": 200
+    },
+    {
+      "case": "late-load-navigation",
+      "url": "/brand/values-reference.png",
+      "status": 200
+    },
+    {
+      "case": "late-load-navigation",
+      "url": "/models/aw139-assembly.glb",
+      "status": 200
+    },
+    {
+      "case": "model-error-fallback",
+      "url": "/brand/alidaunia-logo.svg",
+      "status": 200
+    },
+    {
+      "case": "model-error-fallback",
+      "url": "/brand/vision-operations.jpeg",
+      "status": 200
+    },
+    {
+      "case": "model-error-fallback",
+      "url": "/models/aw139-assembly.glb",
+      "status": 404
+    },
+    {
+      "case": "model-error-fallback",
+      "url": "/environments/studio_small_09_2k.hdr",
+      "status": 200
+    },
+    {
+      "case": "model-error-fallback",
+      "url": "/brand/manifesto-hero.jpg",
+      "status": 200
+    },
+    {
+      "case": "model-error-fallback",
+      "url": "/brand/mission-reference.png",
+      "status": 200
+    },
+    {
+      "case": "model-error-fallback",
+      "url": "/brand/values-reference.png",
+      "status": 200
+    }
+  ],
+  "checkedAt": "2026-10-25T06:39:08.690478+00:00",
+  "productionBuildSha256": {
+    "assets/createAw139Stage-DHDKfp0E.js": "f72dbc27b3c3ed9761b0aabf4585d98cde58d32d8fa7d827fb736f54c364a932",
+    "assets/index-BdfvxFa7.js": "b4697af64debb1f1995fbc9a821710832dd5256c6b25db72908239489ed01012",
+    "assets/index-S9hZjMAp.css": "e5a7f5dded2464d042c89b1375e5ee890a5d560bbe3bde072f930902a62e2696",
+    "environments/studio_small_09_1k.hdr": "733aac1e15ed44bc129801d5890f8e4b547ac6986fb57556b316f9f08a7daa7d",
+    "environments/studio_small_09_2k.hdr": "36724313c0fc66dab126ff90f081b85a0b1ef47be65eda1417bd20b033f0573f",
+    "index.html": "ddea5bd64d0fa40a83a868c4e59fefe42a4b8c2a94abbeb984e1198e8650e707",
+    "models/aw139-assembly.glb": "06e6fc3541d19dda5c19ed389b738c81df183b818b3b3d19b24e8325be1fbec3"
+  }
+}
