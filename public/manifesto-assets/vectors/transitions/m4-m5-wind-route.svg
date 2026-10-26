@@ -1,0 +1,1 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 160" fill="none"><path id="wind-route" d="M45 115C210 115 225 35 400 40S660 125 820 65L950 35" stroke="#0B4584" stroke-width="2.5" pathLength="1"/><circle id="route-start" cx="45" cy="115" r="5" fill="#E31E24"/><circle id="route-end" cx="950" cy="35" r="5" fill="#0B4584"/></svg>

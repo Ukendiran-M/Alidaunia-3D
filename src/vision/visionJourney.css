@@ -1,0 +1,301 @@
+/* Vision, Mission e Valori — one full-viewport architectural journey.
+   The backdrop is sticky inside the route container only, so it can never
+   cover the shared header or footer. Content is ordinary document flow. */
+
+.vj {
+  --vj-view: calc(100svh - var(--site-header-height));
+  position: relative;
+  isolation: isolate;
+  /* Clips both axes: the sticky backdrop's negative margin would otherwise let its box run on
+     under the footer once the route ends. 'clip' keeps sticky positioning working. */
+  overflow: clip;
+  background: #0b1a2c;
+}
+
+.vj-backdrop {
+  position: sticky;
+  top: var(--site-header-height);
+  z-index: 0;
+  height: var(--vj-view);
+  margin-bottom: calc(-1 * var(--vj-view));
+  overflow: hidden;
+  pointer-events: none;
+}
+.vj-backdrop__canvas { position: absolute; inset: 0; opacity: 0; transition: opacity 0.9s ease; }
+.vj[data-world='ready'] .vj-backdrop__canvas { opacity: 1; }
+
+/* While loading, without WebGL or if the aircraft cannot load: still frames rendered from this
+   same aviation base (public/vision/posters), one per chapter. */
+.vj-backdrop__fallback {
+  position: absolute;
+  inset: 0;
+  background: #1b2430 url('/vision/posters/v1.webp') center / cover no-repeat;
+}
+.vj[data-chapter='2'] .vj-backdrop__fallback { background-color: #a6a39b; background-image: url('/vision/posters/v2.webp'); }
+.vj[data-chapter='3'] .vj-backdrop__fallback { background-color: #d9dad6; background-image: url('/vision/posters/v3.webp'); }
+.vj[data-chapter='4'] .vj-backdrop__fallback { background-color: #3a434e; background-image: url('/vision/posters/v4.webp'); }
+.vj[data-chapter='5'] .vj-backdrop__fallback { background-color: #e6e6e2; background-image: url('/vision/posters/v5.webp'); }
+.vj[data-chapter='6'] .vj-backdrop__fallback { background-color: #c9ced2; background-image: url('/vision/posters/v6.webp'); }
+/* Once the live world is showing, the stills are not needed (and are not downloaded). */
+.vj[data-world='ready'] .vj-backdrop__fallback { background-image: none; }
+
+.vj-chapter { position: relative; z-index: 1; }
+.vj-chapter[data-tone='dark'] {
+  --vj-ink: #f5f6f7;
+  --vj-ink-soft: #e6ecf2;
+  --vj-ink-faint: #c3cfdc;
+  --vj-accent: #cfe0f2;
+  --vj-rule: rgba(245, 246, 247, 0.26);
+  --vj-shade: rgba(8, 28, 51, 0.8);
+  --vj-shade-mid: rgba(8, 28, 51, 0.46);
+  color: var(--vj-ink);
+}
+.vj-chapter[data-tone='light'] {
+  --vj-ink: #081c33;
+  --vj-ink-soft: #14283f;
+  --vj-ink-faint: #3a4b5f;
+  --vj-accent: #0b4584;
+  --vj-rule: rgba(8, 28, 51, 0.2);
+  --vj-shade: rgba(245, 246, 247, 0.86);
+  --vj-shade-mid: rgba(245, 246, 247, 0.5);
+  color: var(--vj-ink);
+}
+
+.vj-frame {
+  --vj-band-solid: 44%;
+  --vj-band-end: 66%;
+  --vj-band-feather: clamp(40px, 8vh, 96px);
+  position: relative;
+  width: min(100%, 1376px);
+  margin: 0 auto;
+  padding: clamp(40px, 7vh, 88px) 48px clamp(32px, 5vh, 64px);
+}
+/* One coherent reading support per chapter: a feathered, full-bleed tonal band on the copy side,
+   only as tall as the chapter's text (never over the scenic transition intervals). */
+.vj-frame::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: calc(50% - 50vw);
+  width: 100vw;
+  z-index: -1;
+  pointer-events: none;
+  background: linear-gradient(90deg, var(--vj-shade) 0%, var(--vj-shade) var(--vj-band-solid), var(--vj-shade-mid) calc((var(--vj-band-solid) + var(--vj-band-end)) / 2), transparent var(--vj-band-end));
+  -webkit-mask-image: linear-gradient(180deg, transparent 0, #000 var(--vj-band-feather), #000 calc(100% - var(--vj-band-feather)), transparent 100%);
+  mask-image: linear-gradient(180deg, transparent 0, #000 var(--vj-band-feather), #000 calc(100% - var(--vj-band-feather)), transparent 100%);
+}
+.vj-frame--right::before {
+  background: linear-gradient(270deg, var(--vj-shade) 0%, var(--vj-shade) var(--vj-band-solid), var(--vj-shade-mid) calc((var(--vj-band-solid) + var(--vj-band-end)) / 2), transparent var(--vj-band-end));
+}
+.vj-frame--hero {
+  --vj-band-solid: 50%;
+  --vj-band-end: 70%;
+  min-height: var(--vj-view);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 40px;
+  padding-top: clamp(32px, 7vh, 88px);
+  /* Keeps the scroll cue above the band's lower feather. */
+  padding-bottom: clamp(64px, 9vh, 104px);
+}
+
+/* Copy sits in negative space over the chapter's reading band — never a card. */
+.vj-copy { position: relative; max-width: 39rem; }
+.vj-copy--right { margin-left: auto; }
+.vj-copy--follow { margin-top: clamp(48px, 7vh, 96px); }
+
+.vj-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 5px 12px;
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  background: rgba(255, 255, 255, 0.07);
+  font-size: 0.7812rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: #f5f6f7;
+}
+.vj-pill > span, .vj-kicker > span { width: 7px; height: 7px; border-radius: 50%; background: #e31e24; flex: none; }
+.vj-kicker {
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+  font-size: 0.7812rem;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--vj-accent);
+}
+
+.vj-display {
+  margin-top: 26px;
+  font-size: clamp(2.625rem, 6.2vw, 5.75rem);
+  font-weight: 800;
+  line-height: 1.03;
+  letter-spacing: -0.035em;
+  text-wrap: balance;
+}
+.vj-title {
+  margin-top: 18px;
+  font-size: clamp(2.125rem, 4.4vw, 3.875rem);
+  font-weight: 700;
+  line-height: 1.07;
+  letter-spacing: -0.03em;
+  text-wrap: balance;
+}
+.vj-subtitle {
+  margin-top: 20px;
+  max-width: 34rem;
+  font-size: clamp(1.1875rem, 1.75vw, 1.5625rem);
+  line-height: 1.5;
+  font-weight: 500;
+  color: var(--vj-accent);
+}
+.vj-chapter[data-tone='dark'] .vj-subtitle { color: #f5f6f7; font-weight: 450; }
+.vj-body { margin-top: 24px; display: grid; gap: 16px; font-size: clamp(1.0625rem, 0.5vw + 0.6875rem, 1.2188rem); font-weight: 450; line-height: 1.65; color: var(--vj-ink-soft); }
+/* V1: one column that stays inside the reading band, clear of the aircraft. */
+.vj-body--split { max-width: 37rem; }
+.vj-frame--hero .vj-copy { max-width: 40rem; }
+.vj-body-text { margin-top: 12px; font-size: clamp(1.0625rem, 0.5vw + 0.6875rem, 1.1875rem); font-weight: 450; line-height: 1.65; color: var(--vj-ink-soft); }
+.vj-subhead { font-size: clamp(1.5rem, 2.2vw, 1.9375rem); font-weight: 700; line-height: 1.2; }
+
+.vj-hero-foot {
+  display: flex;
+  align-items: center;
+  gap: 16px 40px;
+  flex-wrap: wrap;
+  max-width: 40rem;
+  padding-top: 20px;
+  border-top: 1px solid rgba(245, 246, 247, 0.18);
+  font-size: 0.7812rem;
+  color: #d5dee8;
+}
+.vj-hero-foot a { position: relative; display: inline-flex; align-items: center; gap: 8px; color: #f5f6f7; }
+/* A comfortable (44px) touch target without changing the link's look. */
+.vj-hero-foot a::after { content: ''; position: absolute; inset: -13px -6px; }
+.vj-hero-foot a:hover { color: #fff; }
+.vj-hero-foot a:focus-visible, .vj-chapter[data-tone='dark'] a:focus-visible { outline-color: #fff; }
+
+.vj-checks { margin-top: 18px; padding-top: 16px; border-top: 1px solid var(--vj-rule); display: grid; gap: 12px; font-size: 1.0625rem; font-weight: 450; line-height: 1.5; color: var(--vj-ink-soft); }
+.vj-checks li { display: flex; gap: 10px; align-items: flex-start; }
+.vj-checks svg { margin-top: 4px; flex: none; color: var(--vj-accent); }
+
+/* V3: three groups, paced by real measurements. */
+.vj-groups { display: grid; gap: clamp(56px, 9vh, 112px); margin-top: clamp(56px, 9vh, 112px); }
+.vj-group__head { display: grid; gap: 4px; padding-bottom: 16px; border-bottom: 1px solid var(--vj-rule); }
+.vj-group__badge { font-size: 0.7812rem; font-weight: 700; letter-spacing: 0.16em; color: #b8141a; }
+.vj-group__count { font-size: 0.7812rem; font-weight: 600; letter-spacing: 0.08em; color: var(--vj-ink-faint); }
+.vj-points { display: grid; gap: 26px; margin-top: 24px; }
+.vj-points li { display: grid; gap: 4px; }
+.vj-points__number { font-size: 0.7812rem; font-weight: 700; letter-spacing: 0.1em; color: var(--vj-accent); }
+.vj-points h4 { font-family: 'Space Grotesk', system-ui, sans-serif; font-size: clamp(1.25rem, 1.4vw, 1.4375rem); font-weight: 700; line-height: 1.25; }
+.vj-points p { font-size: clamp(1.0625rem, 0.4vw + 0.75rem, 1.1562rem); font-weight: 450; line-height: 1.62; color: var(--vj-ink-soft); }
+
+/* V4: four values in flow; the vault folds while each is read. */
+.vj-pillars { display: grid; gap: clamp(56px, 9vh, 112px); margin-top: clamp(56px, 9vh, 112px); }
+.vj-pillar__index { font-size: 0.7812rem; font-weight: 600; letter-spacing: 0.16em; color: var(--vj-ink-faint); }
+.vj-pillar__title { margin-top: 6px; font-size: clamp(2rem, 3.4vw, 2.875rem); font-weight: 700; line-height: 1.08; }
+.vj-pillar__focus {
+  margin-top: 10px;
+  padding-bottom: 12px;
+  border-bottom: 1px solid var(--vj-rule);
+  font-size: 0.8125rem;
+  font-weight: 700;
+  letter-spacing: 0.07em;
+  line-height: 1.5;
+  text-transform: uppercase;
+  color: var(--vj-accent);
+}
+
+/* V5 */
+.vj-entities { display: grid; gap: 26px; }
+.vj-entities li { display: grid; gap: 2px; padding-left: 18px; border-left: 3px solid #0b4584; }
+.vj-entities li:nth-child(2) { border-left-color: #e31e24; }
+.vj-entities li:nth-child(3) { border-left-color: #081c33; }
+.vj-entities span { font-size: 0.7812rem; font-weight: 700; letter-spacing: 0.12em; color: var(--vj-accent); }
+.vj-entities h3 { font-size: 1.625rem; font-weight: 700; }
+.vj-entities p { font-size: clamp(1.0625rem, 0.4vw + 0.75rem, 1.1562rem); font-weight: 450; line-height: 1.6; color: var(--vj-ink-soft); }
+.vj-values__label { font-size: 0.7812rem; font-weight: 700; letter-spacing: 0.16em; color: var(--vj-ink-faint); }
+.vj-values { display: grid; grid-template-columns: 1fr 1fr; gap: 26px 32px; margin-top: 20px; }
+.vj-values h4 { font-family: 'Space Grotesk', system-ui, sans-serif; font-size: 1.25rem; font-weight: 700; padding-bottom: 6px; border-bottom: 2px solid #0b4584; }
+.vj-values p { margin-top: 10px; font-size: 1.0625rem; font-weight: 450; line-height: 1.6; color: var(--vj-ink-soft); }
+
+/* V6 */
+/* Normal spacing to the footer (which has its own accent line and padding); no scenic-only tail. */
+.vj-chapter--last .vj-frame { padding-bottom: clamp(48px, 6vh, 72px); }
+.vj-callout {
+  position: relative;
+  max-width: 39rem;
+  margin-top: clamp(48px, 9vh, 96px);
+  padding: clamp(28px, 4vw, 48px);
+  background: #081c33;
+  color: #fff;
+  box-shadow: 0 30px 60px -30px rgba(8, 28, 51, 0.55);
+}
+.vj-callout__tag { display: inline-block; padding: 4px 12px; background: #e31e24; font-size: 0.75rem; font-weight: 700; letter-spacing: 0.06em; }
+.vj-callout h3 { margin-top: 20px; font-size: clamp(1.625rem, 2.6vw, 2.25rem); font-weight: 700; line-height: 1.15; }
+.vj-callout p { margin-top: 16px; font-size: clamp(1.0625rem, 0.4vw + 0.75rem, 1.1562rem); font-weight: 450; line-height: 1.62; color: #e6ecf2; }
+.vj-callout__actions { margin-top: 26px; display: flex; flex-wrap: wrap; gap: 14px; }
+.vj-callout a:focus-visible, .vj-callout button:focus-visible { outline-color: #fff; }
+.vj-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  padding: 16px 28px;
+  font-size: 0.7812rem;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  transition: background-color 0.2s, color 0.2s, border-color 0.2s;
+}
+.vj-button--primary { background: #fff; color: #081c33; border: 1px solid #fff; }
+.vj-button--primary:hover { background: #0b4584; color: #fff; }
+.vj-button--secondary { border: 1px solid rgba(255, 255, 255, 0.32); color: #fff; }
+.vj-button--secondary:hover { border-color: #fff; }
+.vj-settle { height: 1px; }
+
+/* Transition intervals, sized per boundary from the page (--vj-passage, in visible heights). */
+/* On very short screens a floor keeps the camera's travel from being compressed into a few wheel steps. */
+.vj-passage { height: max(calc(var(--vj-view) * var(--vj-passage, 0.72)), 300px); }
+
+
+@media (max-width: 767px) {
+  .vj-frame { padding: 48px 24px 40px; }
+  .vj-frame--hero { padding-top: 32px; padding-bottom: 56px; }
+  .vj-copy, .vj-callout { max-width: none; }
+  .vj-copy--right { margin-left: 0; }
+  /* Text spans the width on phones: the band covers it evenly, still only over the chapter's text. */
+  .vj-frame, .vj-frame--hero { --vj-band-solid: 100%; --vj-band-end: 100%; --vj-band-feather: 40px; }
+  .vj-chapter--last .vj-frame { padding-bottom: 40px; }
+  .vj-display { font-size: clamp(2.25rem, 10.5vw, 3.375rem); margin-top: 20px; }
+  .vj-values { grid-template-columns: 1fr; }
+  .vj-hero-foot { font-size: 0.75rem; }
+  .vj-hero-foot > span { display: none; }
+  .vj-groups, .vj-pillars { gap: 64px; margin-top: 64px; }
+  /* Shorter screens and travel on phones: the same per-boundary balance, slightly tighter. */
+  .vj-passage { height: max(calc(var(--vj-view) * var(--vj-passage, 0.72) * 0.88), 300px); }
+}
+
+/* Ultra-wide screens (21:9 and wider): the scene is framed across the whole width, so the copy
+   follows it outwards instead of drifting under the aircraft in a centred 1376px frame. */
+@media (min-aspect-ratio: 21/10) and (min-width: 1800px) {
+  .vj-frame { width: min(100%, 78vw); }
+}
+
+@media (max-height: 600px) and (min-width: 768px) {
+  .vj-frame--hero { min-height: auto; }
+  .vj-display { font-size: 2.75rem; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .vj-backdrop__canvas { transition: none; }
+  /* Still compositions cut between chapters: only a short breathing space is needed. */
+  .vj-passage { height: calc(var(--vj-view) * 0.3); }
+}
+
+/* Long Italian words wrap (or hyphenate) instead of overflowing with enlarged text. */
+.vj h1, .vj h2, .vj h3 { overflow-wrap: break-word; hyphens: auto; }

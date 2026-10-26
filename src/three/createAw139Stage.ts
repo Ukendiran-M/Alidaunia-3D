@@ -124,9 +124,12 @@ export function createAw139Stage(container: HTMLElement, options: Aw139StageOpti
     camera.position.copy(target).addScaledVector(viewDirection, distance * 1.10);
     camera.lookAt(target);
   }
+  const pixelRatioCap = Math.min(window.devicePixelRatio, mobile ? 1.35 : 1.75);
   function resize() {
     const width = Math.max(1, container.clientWidth);
     const height = Math.max(1, container.clientHeight);
+    // Very large viewports (ultra-wide, 4K at 1×) keep a bounded drawing buffer.
+    renderer.setPixelRatio(Math.min(pixelRatioCap, Math.max(0.8, Math.sqrt(6e6 / (width * height)))));
     renderer.setSize(width, height, false);
     fitCamera(width, height);
     invalidate();

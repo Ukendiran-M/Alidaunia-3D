@@ -20,12 +20,12 @@ export const Footer: React.FC<FooterProps> = ({ onNavigate }) => {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 sm:py-20">
         <div className="grid grid-cols-1 md:grid-cols-12 gap-12 lg:gap-16">
           {/* Brand & Purpose Column */}
-          <div className="md:col-span-5 space-y-4">
+          <div className="md:col-span-12 lg:col-span-5 space-y-4">
             <div className="flex flex-col">
               <span className="font-display text-2xl font-bold tracking-tight text-white">
                 ALIDAUNIA
               </span>
-              <span className="font-mono-tech text-xs uppercase tracking-[0.25em] text-[#0B4584] font-semibold mt-0.5">
+              <span className="font-mono-tech text-xs uppercase tracking-[0.25em] text-[#9BBCE2] font-semibold mt-0.5">
                 SERVICES
               </span>
             </div>
@@ -37,11 +37,11 @@ export const Footer: React.FC<FooterProps> = ({ onNavigate }) => {
           </div>
 
           {/* Navigation Column */}
-          <div className="md:col-span-3 space-y-3">
+          <div className="md:col-span-6 lg:col-span-3 space-y-3">
             <h3 className="font-mono-tech text-xs uppercase tracking-widest text-[#F5F6F7]/50 font-semibold">
               Navigazione
             </h3>
-            <ul className="space-y-3 text-sm">
+            <ul className="space-y-1 text-sm">
               <li>
                 <button
                   type="button"
@@ -49,7 +49,7 @@ export const Footer: React.FC<FooterProps> = ({ onNavigate }) => {
                     window.scrollTo({ top: 0, behavior: 'smooth' });
                     onNavigate(ROUTES.MANIFESTO);
                   }}
-                  className="text-[#F5F6F7]/80 hover:text-white transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#0B4584] text-left"
+                  className="inline-flex min-h-11 items-center text-[#F5F6F7]/80 hover:text-white transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#0B4584] text-left"
                 >
                   Manifesto
                 </button>
@@ -61,7 +61,7 @@ export const Footer: React.FC<FooterProps> = ({ onNavigate }) => {
                     window.scrollTo({ top: 0, behavior: 'smooth' });
                     onNavigate(ROUTES.VISION);
                   }}
-                  className="text-[#F5F6F7]/80 hover:text-white transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#0B4584] text-left"
+                  className="inline-flex min-h-11 items-center text-[#F5F6F7]/80 hover:text-white transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#0B4584] text-left"
                 >
                   Vision, Mission e Valori
                 </button>
@@ -70,7 +70,7 @@ export const Footer: React.FC<FooterProps> = ({ onNavigate }) => {
           </div>
 
           {/* Contact and Corporate Link */}
-          <div className="md:col-span-4 space-y-4">
+          <div className="md:col-span-6 lg:col-span-4 space-y-4">
             <h3 className="font-mono-tech text-xs uppercase tracking-widest text-[#F5F6F7]/50 font-semibold">
               Contatti Istituzionali
             </h3>
@@ -82,7 +82,7 @@ export const Footer: React.FC<FooterProps> = ({ onNavigate }) => {
                 href={EXTERNAL_LINKS.CONTACTS}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex items-center gap-2 px-5 py-3 text-xs font-mono-tech uppercase tracking-wider font-semibold bg-[#0B4584] hover:bg-white hover:text-[#081C33] text-white transition-colors border border-[#0B4584]"
+                className="inline-flex min-h-11 items-center gap-2 px-5 py-3 text-xs font-mono-tech uppercase tracking-wider font-semibold bg-[#0B4584] hover:bg-white hover:text-[#081C33] text-white transition-colors border border-[#0B4584]"
               >
                 <span>Contatta Alidaunia</span>
                 <ArrowUpRight className="w-4 h-4" />
@@ -93,7 +93,7 @@ export const Footer: React.FC<FooterProps> = ({ onNavigate }) => {
                 href={EXTERNAL_LINKS.COMPANY_HOME}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="text-xs text-[#F5F6F7]/50 hover:text-[#F5F6F7]/90 transition-colors inline-flex items-center gap-1 font-mono-tech"
+                className="text-xs text-[#F5F6F7]/50 hover:text-[#F5F6F7]/90 transition-colors inline-flex min-h-11 items-center gap-1 font-mono-tech"
               >
                 alidaunia.it
               </a>
@@ -112,7 +112,7 @@ export const Footer: React.FC<FooterProps> = ({ onNavigate }) => {
         </div>
 
         <details className="mt-6 border-t border-white/10 pt-5 text-xs text-white/60">
-          <summary className="font-mono-tech cursor-pointer w-fit py-1 hover:text-white focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-white">Crediti 3D</summary>
+          <summary className="font-mono-tech cursor-pointer w-fit min-h-[44px] py-[14px] hover:text-white focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-white">Crediti 3D</summary>
           <div className="mt-4 max-w-3xl space-y-3 leading-relaxed">
             <p>
               Modello <a className="underline hover:text-white" href="https://sketchfab.com/3d-models/aw139-chopper-e023735d15b445f0a0b7b250176f894a" target="_blank" rel="noopener noreferrer">Aw139 Chopper</a> di{' '}
