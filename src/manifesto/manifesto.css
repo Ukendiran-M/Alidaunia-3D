@@ -1,0 +1,472 @@
+/*
+ * Manifesto M2–M6. Scoped to .mf; M1 (.aw139-hero) and page two (.vj) are untouched.
+ * Each chapter: centred heading → centred object on the section axis → organised copy.
+ * Layers inside .mf: section backgrounds and object canvases (auto), boundary cues (1),
+ * copy (2), sticky figures (3, opaque, so copy passes beneath them, never across).
+ * Text entrances only move inner elements (.mf-w__i, blocks); layout boxes never animate.
+ */
+
+.mf {
+  --mf-navy: #081c33;
+  --mf-blue: #0b4584;
+  --mf-red: #e31e24;
+  --mf-offwhite: #f5f6f7;
+  --mf-gutter: 48px;
+  --mf-read: 1040px;
+  position: relative;
+  isolation: isolate;
+}
+
+.mf-ch {
+  position: relative;
+  padding: clamp(64px, 10vh, 120px) 0 clamp(56px, 9vh, 104px);
+  /* Light chapters */
+  --mf-ink: #081c33;
+  --mf-ink-body: #1c2f45;
+  --mf-ink-soft: #3d4f63;
+  --mf-accent: #0b4584;
+  --mf-rule: rgba(8, 28, 51, 0.14);
+  --mf-bg: #f5f6f7;
+  background: var(--mf-bg);
+  color: var(--mf-ink);
+}
+.mf-ch--white { --mf-bg: #ffffff; }
+.mf-ch--navy {
+  --mf-ink: #f5f6f7;
+  --mf-ink-body: #dfe7f0;
+  --mf-ink-soft: #b9cadc;
+  --mf-accent: #cfe0f2;
+  --mf-rule: rgba(245, 246, 247, 0.18);
+  --mf-bg: #081c33;
+}
+
+.mf-wrap { position: relative; width: min(100% - 2 * var(--mf-gutter), 1280px); margin-inline: auto; }
+.mf-copy { position: relative; z-index: 2; }
+
+/* ---------- Heads: centred, short ---------- */
+.mf-head { display: flex; flex-direction: column; align-items: center; text-align: center; max-width: 54rem; margin-inline: auto; }
+.mf-kicker {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 0.7812rem;
+  font-weight: 600;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--mf-accent);
+}
+.mf-kicker__dot { width: 6px; height: 6px; border-radius: 50%; background: var(--mf-blue); }
+.mf-ch--navy .mf-kicker__dot { background: var(--mf-red); }
+/* M5's mark is a small connection: the M4 airflow line lands on its blue end. */
+.mf-kicker__route { position: relative; display: inline-flex; align-items: center; width: 30px; height: 10px; }
+.mf-kicker__route::before { content: ''; position: absolute; left: 4px; right: 4px; top: 50%; height: 1.5px; margin-top: -0.75px; background: var(--mf-blue); }
+.mf-kicker__route-start, .mf-kicker__route-end { position: relative; width: 7px; height: 7px; border-radius: 50%; }
+.mf-kicker__route-start { background: var(--mf-red); }
+.mf-kicker__route-end { margin-left: auto; background: var(--mf-blue); }
+
+.mf-title {
+  /* Long Italian words wrap (or hyphenate) instead of overflowing with enlarged text. */
+  overflow-wrap: break-word;
+  hyphens: auto;
+  margin-top: 18px;
+  max-width: 20ch;
+  font-size: clamp(2.125rem, 3.1vw + 0.75rem, 3.75rem);
+  font-weight: 700;
+  line-height: 1.08;
+  letter-spacing: -0.035em;
+  color: var(--mf-ink);
+  text-wrap: balance;
+}
+.mf-title--large { font-size: clamp(2.5rem, 4.4vw + 0.625rem, 5.25rem); line-height: 1.04; max-width: 16ch; }
+.mf-subtitle {
+  margin-top: 18px;
+  max-width: 38rem;
+  font-size: clamp(1.1875rem, 0.5vw + 0.8125rem, 1.4375rem);
+  line-height: 1.45;
+  font-weight: 500;
+  color: var(--mf-accent);
+}
+.mf-ch--light .mf-subtitle, .mf-ch--white .mf-subtitle { color: var(--mf-blue); }
+
+/* Heading words: separate inline boxes so lines can rise through a mask. The mask only
+   exists while the entrance plays and leaves room for accents and descenders. */
+.mf-w { display: inline-block; }
+.mf-title.is-masked .mf-w { clip-path: polygon(-12% -45%, 112% -45%, 112% 126%, -12% 126%); }
+
+/* Section motifs */
+.mf-datum { position: relative; display: block; width: 132px; height: 1px; margin-bottom: 22px; background: #7fa7d6; }
+.mf-datum::before, .mf-datum::after { content: ''; position: absolute; top: -5px; width: 1px; height: 11px; background: #7fa7d6; }
+.mf-datum::before { left: 0; }
+.mf-datum::after { right: 0; }
+.mf-phase-line {
+  display: block;
+  width: min(30rem, 80%);
+  height: 9px;
+  margin-top: 22px;
+  background:
+    linear-gradient(var(--mf-blue), var(--mf-blue)) center / 100% 1px no-repeat,
+    repeating-linear-gradient(90deg, var(--mf-blue) 0 1px, transparent 1px calc(25% - 0.25px)) left / calc(100% + 1px) 100%;
+}
+.mf-connect { display: flex; align-items: center; width: 148px; margin-top: 20px; }
+.mf-connect__dot { width: 8px; height: 8px; border-radius: 50%; flex: none; }
+.mf-connect__dot--a { background: var(--mf-red); }
+.mf-connect__dot--b { background: var(--mf-blue); }
+.mf-connect__line { flex: 1; height: 1.5px; background: var(--mf-blue); }
+.mf-register { display: flex; width: 168px; height: 3px; margin-top: 20px; }
+.mf-register__red, .mf-register__blue { flex: 1; }
+.mf-register__red { background: var(--mf-red); }
+.mf-register__blue { background: var(--mf-blue); }
+
+/* ---------- Reading bands ---------- */
+.mf-band p {
+  font-size: clamp(1.0625rem, 0.45vw + 0.7188rem, 1.1875rem);
+  line-height: 1.66;
+  font-weight: 450;
+  color: var(--mf-ink-body);
+  break-inside: avoid;
+}
+.mf-band p + p { margin-top: 1em; }
+.mf-band--two { max-width: var(--mf-read); margin-inline: auto; columns: 2; column-gap: clamp(32px, 4vw, 64px); }
+.mf-band--center { max-width: 42rem; margin-inline: auto; }
+.mf-band--two > .mf-end-rule { column-span: all; }
+.mf-end-rule { display: block; height: 1px; margin-top: clamp(36px, 5vh, 56px); background: var(--mf-rule); }
+.mf-m2__end-rule { max-width: var(--mf-read); margin-inline: auto; background: rgba(127, 167, 214, 0.45); }
+.mf-m4__rule { background: rgba(155, 188, 226, 0.55); }
+
+/* ---------- Object figures, on the section axis ---------- */
+.mf-visual { position: relative; margin: 0; display: flex; flex-direction: column; }
+.mf-visual__frame { position: relative; flex: 1 1 auto; min-height: 0; }
+.mf-visual__canvas,
+.mf-visual__poster { position: absolute; inset: 0; width: 100%; height: 100%; display: block; }
+.mf-visual__poster { object-fit: contain; transition: opacity 0.5s ease 0.1s; }
+/* Posters carry the chapter colour; blending removes their rectangle on the section. */
+.mf-ch--navy .mf-visual__poster { mix-blend-mode: lighten; }
+.mf-ch--light .mf-visual__poster, .mf-ch--white .mf-visual__poster { mix-blend-mode: multiply; }
+.mf-visual__canvas { opacity: 0; transition: opacity 0.5s ease; }
+.mf-visual[data-state='ready'] .mf-visual__canvas { opacity: 1; }
+.mf-visual[data-state='ready'] .mf-visual__poster { opacity: 0; }
+.mf-visual__caption {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  font-size: 0.75rem;
+  letter-spacing: 0.12em;
+  color: var(--mf-ink-soft);
+}
+
+/* Stages (M2, M3): the centred figure holds in view, opaque, while its own copy passes beneath. */
+.mf-stage { margin-top: clamp(28px, 4vh, 48px); }
+.mf-figure {
+  position: sticky;
+  top: calc(var(--site-header-height) + 8px);
+  z-index: 3;
+  background: var(--mf-bg);
+}
+.mf-figure::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 100%;
+  height: 32px;
+  background: linear-gradient(var(--mf-bg), transparent);
+  pointer-events: none;
+}
+.mf-figure--m2 .mf-visual { height: clamp(300px, 50svh, 560px); }
+.mf-figure--m3 .mf-visual { height: clamp(300px, 46svh, 540px); }
+.mf-stage__content { padding-top: clamp(32px, 5vh, 56px); }
+
+/* ---------- M2: two-column explanation, 3 + 2 system matrix ---------- */
+.mf-matrix {
+  max-width: var(--mf-read);
+  margin: clamp(40px, 6vh, 64px) auto 0;
+  display: grid;
+  grid-template-columns: repeat(6, minmax(0, 1fr));
+  gap: clamp(28px, 4vh, 40px) clamp(28px, 3vw, 48px);
+}
+.mf-matrix__item { position: relative; grid-column: span 2; padding-top: 18px; }
+.mf-matrix__item:nth-child(n + 4) { grid-column: span 3; }
+.mf-matrix__rule { position: absolute; top: 0; left: 0; right: 0; height: 1px; background: var(--mf-rule); }
+.mf-matrix__rule::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: -1px;
+  width: 100%;
+  height: 3px;
+  background: #7fa7d6;
+  transform: scaleX(0);
+  transform-origin: left center;
+  transition: transform 0.45s ease, background-color 0.3s ease;
+}
+/* Accent while the matching drawing group registers on the folio, then a quiet trace. */
+.mf-matrix__item[data-sync-state='active'] .mf-matrix__rule::after { transform: scaleX(1); background: var(--mf-red); }
+.mf-matrix__item[data-sync-state='done'] .mf-matrix__rule::after { transform: scaleX(1); background: rgba(127, 167, 214, 0.7); height: 1px; top: 0; }
+.mf-matrix__name { font-size: clamp(1.125rem, 0.4vw + 0.8125rem, 1.25rem); font-weight: 600; letter-spacing: -0.01em; line-height: 1.3; color: var(--mf-ink); transition: color 0.3s ease; }
+.mf-matrix__item[data-sync-state='active'] .mf-matrix__name { color: #fff; }
+.mf-matrix__text { margin-top: 6px; font-size: clamp(1.0312rem, 0.3vw + 0.7812rem, 1.0938rem); line-height: 1.6; color: var(--mf-ink-body); }
+
+/* ---------- M3: phase rail under the site, phase rows below ---------- */
+.mf-rail { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 12px; max-width: 760px; margin: 6px auto 0; padding-bottom: 10px; }
+.mf-rail__bar { display: block; height: 3px; background: var(--mf-rule); position: relative; overflow: hidden; }
+.mf-rail__bar::after { content: ''; position: absolute; inset: 0; background: var(--mf-blue); transform: scaleX(0); transform-origin: left center; transition: transform 0.4s ease, opacity 0.3s ease; }
+.mf-rail__step[data-sync-state='active'] .mf-rail__bar::after { transform: scaleX(1); }
+.mf-rail__step[data-sync-state='done'] .mf-rail__bar::after { transform: scaleX(1); opacity: 0.35; }
+.mf-rail__label { display: block; margin-top: 8px; font-size: 0.6875rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--mf-ink-soft); transition: color 0.3s ease; }
+.mf-rail__step[data-sync-state='active'] .mf-rail__label { color: var(--mf-blue); font-weight: 700; }
+
+.mf-phases { max-width: var(--mf-read); margin: clamp(40px, 6vh, 64px) auto 0; display: grid; }
+.mf-phase {
+  position: relative;
+  display: grid;
+  grid-template-columns: minmax(0, 4fr) minmax(0, 8fr);
+  column-gap: clamp(24px, 4vw, 64px);
+  padding: clamp(24px, 3.5vh, 36px) 0;
+  border-top: 1px solid var(--mf-rule);
+}
+.mf-phase::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: -1px;
+  width: 33%;
+  height: 2px;
+  background: var(--mf-blue);
+  transform: scaleX(0);
+  transform-origin: left center;
+  transition: transform 0.45s ease;
+}
+.mf-phase[data-sync-state='active']::before { transform: scaleX(1); }
+.mf-phase__number {
+  display: inline-block;
+  padding: 4px 9px;
+  border: 1px solid var(--mf-blue);
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  color: var(--mf-blue);
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+.mf-phase[data-sync-state='active'] .mf-phase__number { background: var(--mf-blue); color: #fff; }
+.mf-phase__title { margin-top: 12px; font-size: clamp(1.5rem, 0.8vw + 0.875rem, 1.875rem); font-weight: 700; letter-spacing: -0.025em; color: var(--mf-ink); }
+.mf-phase[data-sync-state='active'] .mf-phase__title { animation: mf-settle 0.45s cubic-bezier(0.2, 0.7, 0.2, 1); }
+@keyframes mf-settle {
+  from { transform: translateY(5px); }
+  to { transform: none; }
+}
+.mf-phase__text { font-size: clamp(1.0625rem, 0.4vw + 0.75rem, 1.1562rem); line-height: 1.6; color: var(--mf-ink-body); }
+.mf-phase__details { margin-top: 14px; display: grid; gap: 8px; }
+.mf-phase__details li { display: flex; gap: 10px; align-items: flex-start; font-size: 1.0312rem; line-height: 1.55; color: var(--mf-ink-body); }
+.mf-phase__check { width: 17px; height: 17px; margin-top: 4px; flex: none; color: var(--mf-blue); }
+
+/* ---------- M4: tall instrument on the axis ---------- */
+/* The chapter starts in the previous chapter's light tone; its navy opens as the lens iris. */
+.mf-m4 { background: var(--mf-offwhite); }
+.mf-m4__navy { position: absolute; inset: 0; background: var(--mf-navy); }
+.mf-m4__visual { display: flex; justify-content: center; margin-top: clamp(24px, 4vh, 48px); }
+.mf-visual--m4 { width: min(100%, 560px); height: clamp(380px, 70svh, 680px); }
+.mf-band--m4 { margin-top: clamp(28px, 4vh, 48px); }
+
+/* ---------- M5: centred atlas, six-node captions ---------- */
+.mf-m5__atlas { margin-top: clamp(16px, 2.5vh, 32px); }
+.mf-visual--m5 { width: min(100%, 1200px); margin-inline: auto; height: clamp(340px, 46vw, 600px); }
+.mf-node-labels { position: absolute; inset: 0; pointer-events: none; }
+.mf-node-label {
+  position: absolute;
+  left: 0;
+  top: 0;
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  translate: 16px -135%;
+  padding: 5px 9px;
+  white-space: nowrap;
+  font-size: 0.8438rem;
+  font-weight: 600;
+  line-height: 1.2;
+  color: #081c33;
+  background: rgba(255, 255, 255, 0.94);
+  border: 1px solid rgba(8, 28, 51, 0.16);
+  box-shadow: 0 1px 2px rgba(8, 28, 51, 0.08);
+  opacity: 0;
+  transition: opacity 0.35s ease;
+}
+/* The hub's label sits to its left so it never meets San Giovanni Rotondo's, just to its right. */
+.mf-node-label--foggia { translate: calc(-100% - 16px) -135%; }
+/* San Giovanni Rotondo sits just below Peschici's row: its label hangs below-right of the node. */
+.mf-node-label--san-giovanni { translate: 14px 40%; }
+.mf-node-label[data-on='true'] { opacity: 1; }
+.mf-node-label__num { font-size: 0.6875rem; color: var(--mf-blue); }
+.mf-node-label--hub { color: #fff; background: #081c33; border-color: #081c33; }
+.mf-node-label--hub .mf-node-label__num { color: #f3a5a7; }
+
+.mf-nodes { max-width: var(--mf-read); margin: clamp(28px, 4vh, 48px) auto 0; }
+.mf-nodes__head {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 8px 24px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+}
+.mf-nodes__hub { color: var(--mf-blue); }
+.mf-nodes__list { margin-top: 22px; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 24px clamp(24px, 3vw, 48px); }
+.mf-node { position: relative; display: flex; gap: 12px; align-items: baseline; padding-top: 16px; }
+.mf-node__leader { position: absolute; top: 0; left: 0; right: 0; height: 1px; background: var(--mf-rule); }
+.mf-node__leader::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: -0.5px;
+  width: 100%;
+  height: 2px;
+  background: var(--mf-blue);
+  transform: scaleX(0.08);
+  transform-origin: left center;
+  transition: transform 0.55s ease;
+}
+.mf-node--hub .mf-node__leader::after { background: var(--mf-red); }
+/* The leader draws as this node rises in the atlas, and retracts if the reader scrolls back. */
+.mf-node[data-sync-state='active'] .mf-node__leader::after,
+.mf-node[data-sync-state='done'] .mf-node__leader::after { transform: scaleX(1); }
+.mf-node__num { font-size: 0.75rem; color: var(--mf-blue); }
+.mf-node--hub .mf-node__num { color: var(--mf-red); }
+.mf-node__name { display: block; font-size: 1.0625rem; font-weight: 600; color: var(--mf-ink); }
+.mf-node__role { display: block; margin-top: 2px; font-size: 1rem; line-height: 1.5; color: var(--mf-ink-soft); }
+.mf-m5 .mf-band--two { margin-top: clamp(40px, 6vh, 64px); }
+
+/* ---------- M6: signature, principles, centred actions ---------- */
+.mf-m6__mark { margin-top: clamp(24px, 4vh, 40px); }
+.mf-visual--m6 { width: min(100%, 440px); height: clamp(220px, 32vh, 320px); margin-inline: auto; }
+.mf-m6 .mf-band--center { margin-top: clamp(28px, 4vh, 44px); }
+.mf-principles {
+  max-width: 1120px;
+  margin: clamp(48px, 7vh, 72px) auto 0;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: clamp(28px, 3vw, 48px);
+}
+.mf-principle__rule { display: block; height: 3px; background: var(--mf-blue); }
+.mf-principle--2 .mf-principle__rule { background: var(--mf-red); }
+.mf-principle--3 .mf-principle__rule { background: var(--mf-navy); }
+.mf-principle__head { padding-top: 18px; }
+.mf-principle__number { font-size: 0.75rem; font-weight: 700; letter-spacing: 0.16em; color: var(--mf-blue); }
+.mf-principle--2 .mf-principle__number { color: #c4161c; }
+.mf-principle--3 .mf-principle__number { color: var(--mf-navy); }
+.mf-principle__title { margin-top: 10px; font-size: clamp(1.25rem, 0.5vw + 0.875rem, 1.4375rem); font-weight: 700; letter-spacing: -0.02em; line-height: 1.25; color: var(--mf-ink); }
+.mf-principle__text { margin-top: 10px; font-size: clamp(1.0312rem, 0.3vw + 0.7812rem, 1.0938rem); line-height: 1.62; color: var(--mf-ink-body); }
+
+.mf-actions {
+  max-width: 1120px;
+  margin: clamp(48px, 7vh, 72px) auto 0;
+  padding-top: clamp(28px, 4vh, 40px);
+  border-top: 1px solid var(--mf-rule);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 20px;
+}
+.mf-actions__kicker { font-size: 0.75rem; letter-spacing: 0.14em; color: var(--mf-ink-soft); }
+.mf-actions__title { margin-top: 4px; font-family: 'Space Grotesk', system-ui, sans-serif; font-size: 1.25rem; font-weight: 700; color: var(--mf-ink); }
+.mf-actions__buttons { display: flex; flex-wrap: wrap; justify-content: center; gap: 16px; }
+.mf-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  padding: 15px 24px;
+  font-size: 0.7812rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  transition: background-color 0.2s, color 0.2s, border-color 0.2s;
+}
+.mf-button--primary { background: var(--mf-blue); color: #fff; }
+.mf-button--primary:hover { background: var(--mf-navy); }
+.mf-button--secondary { border: 1px solid rgba(8, 28, 51, 0.32); color: var(--mf-navy); }
+.mf-button--secondary:hover { background: var(--mf-navy); border-color: var(--mf-navy); color: #fff; }
+
+/* ---------- Boundary cues ---------- */
+.mf-cues {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 1;
+  pointer-events: none;
+  overflow: visible;
+  fill: none;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+.mf-cues path { stroke-dasharray: 0 1; }
+.mf[data-motion='reduced'] .mf-cue--lens,
+.mf[data-motion='reduced'] .mf-cue--wind,
+.mf[data-motion='reduced'] .mf-cue--registration { display: none; }
+
+/* ---------- Narrower layouts ---------- */
+@media (max-width: 1023px) {
+  .mf-matrix { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .mf-matrix__item, .mf-matrix__item:nth-child(n + 4) { grid-column: span 1; }
+  .mf-matrix__item:last-child { grid-column: 1 / -1; }
+  .mf-nodes__list { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .mf-principles { grid-template-columns: minmax(0, 1fr); max-width: 42rem; }
+  .mf-phase { grid-template-columns: minmax(0, 1fr); row-gap: 14px; }
+}
+
+@media (max-width: 767px) {
+  .mf { --mf-gutter: 20px; }
+  .mf-ch { padding: 56px 0 52px; }
+  .mf-title { margin-top: 14px; font-size: clamp(1.9375rem, 8.4vw, 2.5rem); }
+  .mf-title--large { font-size: clamp(2.25rem, 10.5vw, 3rem); }
+  .mf-subtitle { margin-top: 14px; font-size: 1.1562rem; }
+  .mf-kicker { font-size: 0.75rem; }
+
+  .mf-figure { top: var(--site-header-height); }
+  .mf-figure--m2 .mf-visual, .mf-figure--m3 .mf-visual { height: clamp(200px, 32svh, 280px); }
+  .mf-figure::after { height: 20px; }
+  .mf-rail { gap: 6px; padding-bottom: 6px; }
+  .mf-rail__label { font-size: 0.625rem; letter-spacing: 0.06em; text-align: center; }
+  /* Phones: numbers only; the full phase names are in the blocks just below. */
+  .mf-rail__name { display: none; }
+  .mf-band--two { columns: 1; }
+  .mf-matrix { grid-template-columns: minmax(0, 1fr); }
+  .mf-matrix__item:last-child { grid-column: auto; }
+
+  .mf-visual--m4 { height: clamp(320px, 56svh, 480px); }
+  .mf-visual--m5 { height: clamp(230px, 64vw, 330px); }
+  /* Phones: the numbered caption list carries the names; projected labels would collide. */
+  .mf-node-labels { display: none; }
+  .mf-nodes__list { grid-template-columns: minmax(0, 1fr); gap: 18px; }
+
+  .mf-visual--m6 { height: clamp(200px, 30svh, 260px); }
+  .mf-actions__buttons, .mf-button { width: 100%; }
+}
+
+@media (max-width: 767px) {
+  /* Phones: the caption sits under the object instead of over its lower edge. */
+  .mf-visual__caption { position: static; margin-top: 4px; text-align: right; }
+  .mf-visual--m3 .mf-visual__caption { text-align: left; }
+}
+
+/* Very short phones: too little reading room under a sticky figure, so the stages run in flow. */
+@media (max-width: 767px) and (max-height: 620px) {
+  .mf-figure { position: relative; top: auto; }
+  .mf-figure::after { display: none; }
+  .mf-figure--m2 .mf-visual, .mf-figure--m3 .mf-visual { height: clamp(200px, min(62svh, 78vw), 340px); }
+}
+
+/* Short desktop and landscape screens: no sticky figures, the stages run in normal flow. */
+@media (min-width: 768px) and (max-height: 700px) {
+  .mf-figure { position: relative; top: auto; }
+  .mf-figure::after { display: none; }
+  .mf-figure--m2 .mf-visual, .mf-figure--m3 .mf-visual { height: calc(100svh - var(--site-header-height) - 72px); min-height: 220px; }
+  .mf-visual--m4 { height: calc(100svh - var(--site-header-height) - 32px); min-height: 260px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .mf-visual__canvas, .mf-visual__poster, .mf-node-label { transition: none; }
+  .mf-phase[data-sync-state='active'] .mf-phase__title { animation: none; }
+}

@@ -170,6 +170,9 @@ export function createVisionWorld(host: HTMLElement, options: VisionWorldOptions
   function resize() {
     width = Math.max(1, host.clientWidth);
     height = Math.max(1, host.clientHeight);
+    // Very large viewports (ultra-wide, 4K at 1×) keep a bounded drawing buffer.
+    const cap = Math.min(window.devicePixelRatio, mobile ? 1.25 : 1.5);
+    renderer.setPixelRatio(Math.min(cap, Math.max(0.8, Math.sqrt(6e6 / (width * height)))));
     renderer.setSize(width, height, false);
     frameCamera();
     if (ready && !raf && !Number.isNaN(current)) render(performance.now());

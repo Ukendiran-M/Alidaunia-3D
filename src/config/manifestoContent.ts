@@ -198,3 +198,23 @@ export const M5_NETWORK_CONNECTIONS: NetworkConnection[] = [
   { from: 'san-giovanni', to: 'rete-regionale' },
   { from: 'foggia', to: 'rete-regionale' }
 ];
+
+export interface GuidingPrinciple {
+  title: string;
+  description: string;
+}
+
+export const M6_PRINCIPLES: GuidingPrinciple[] = [
+  {
+    title: 'Sicurezza Senza Compromessi',
+    description: "Priorità all'analisi attenta degli spazi operativi, alla regolarità dei flussi e all'efficienza dei presidi di sicurezza a terra."
+  },
+  {
+    title: 'Rigore Progettuale & Precisione',
+    description: "Metodo ingegneristico accurato, dai primi rilievi geometrici fino al collaudo operativo e all'avvio in esercizio."
+  },
+  {
+    title: 'Continuità del Servizio',
+    description: 'Accompagnamento costante degli approdi attraverso protocolli di manutenzione e coordinamento operativo di terra.'
+  }
+];

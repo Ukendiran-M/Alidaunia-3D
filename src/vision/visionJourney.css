@@ -6,7 +6,9 @@
   --vj-view: calc(100svh - var(--site-header-height));
   position: relative;
   isolation: isolate;
-  overflow-x: clip;
+  /* Clips both axes: the sticky backdrop's negative margin would otherwise let its box run on
+     under the footer once the route ends. 'clip' keeps sticky positioning working. */
+  overflow: clip;
   background: #0b1a2c;
 }
 
@@ -111,7 +113,7 @@
   padding: 5px 12px;
   border: 1px solid rgba(255, 255, 255, 0.18);
   background: rgba(255, 255, 255, 0.07);
-  font-size: 12.5px;
+  font-size: 0.7812rem;
   letter-spacing: 0.14em;
   text-transform: uppercase;
   color: #f5f6f7;
@@ -121,7 +123,7 @@
   display: inline-flex;
   align-items: center;
   gap: 9px;
-  font-size: 12.5px;
+  font-size: 0.7812rem;
   font-weight: 700;
   letter-spacing: 0.16em;
   text-transform: uppercase;
@@ -130,7 +132,7 @@
 
 .vj-display {
   margin-top: 26px;
-  font-size: clamp(42px, 6.2vw, 92px);
+  font-size: clamp(2.625rem, 6.2vw, 5.75rem);
   font-weight: 800;
   line-height: 1.03;
   letter-spacing: -0.035em;
@@ -138,7 +140,7 @@
 }
 .vj-title {
   margin-top: 18px;
-  font-size: clamp(34px, 4.4vw, 62px);
+  font-size: clamp(2.125rem, 4.4vw, 3.875rem);
   font-weight: 700;
   line-height: 1.07;
   letter-spacing: -0.03em;
@@ -147,18 +149,18 @@
 .vj-subtitle {
   margin-top: 20px;
   max-width: 34rem;
-  font-size: clamp(19px, 1.75vw, 25px);
+  font-size: clamp(1.1875rem, 1.75vw, 1.5625rem);
   line-height: 1.5;
   font-weight: 500;
   color: var(--vj-accent);
 }
 .vj-chapter[data-tone='dark'] .vj-subtitle { color: #f5f6f7; font-weight: 450; }
-.vj-body { margin-top: 24px; display: grid; gap: 16px; font-size: clamp(17px, 0.5vw + 11px, 19.5px); font-weight: 450; line-height: 1.65; color: var(--vj-ink-soft); }
+.vj-body { margin-top: 24px; display: grid; gap: 16px; font-size: clamp(1.0625rem, 0.5vw + 0.6875rem, 1.2188rem); font-weight: 450; line-height: 1.65; color: var(--vj-ink-soft); }
 /* V1: one column that stays inside the reading band, clear of the aircraft. */
 .vj-body--split { max-width: 37rem; }
 .vj-frame--hero .vj-copy { max-width: 40rem; }
-.vj-body-text { margin-top: 12px; font-size: clamp(17px, 0.5vw + 11px, 19px); font-weight: 450; line-height: 1.65; color: var(--vj-ink-soft); }
-.vj-subhead { font-size: clamp(24px, 2.2vw, 31px); font-weight: 700; line-height: 1.2; }
+.vj-body-text { margin-top: 12px; font-size: clamp(1.0625rem, 0.5vw + 0.6875rem, 1.1875rem); font-weight: 450; line-height: 1.65; color: var(--vj-ink-soft); }
+.vj-subhead { font-size: clamp(1.5rem, 2.2vw, 1.9375rem); font-weight: 700; line-height: 1.2; }
 
 .vj-hero-foot {
   display: flex;
@@ -168,37 +170,39 @@
   max-width: 40rem;
   padding-top: 20px;
   border-top: 1px solid rgba(245, 246, 247, 0.18);
-  font-size: 12.5px;
+  font-size: 0.7812rem;
   color: #d5dee8;
 }
-.vj-hero-foot a { display: inline-flex; align-items: center; gap: 8px; color: #f5f6f7; }
+.vj-hero-foot a { position: relative; display: inline-flex; align-items: center; gap: 8px; color: #f5f6f7; }
+/* A comfortable (44px) touch target without changing the link's look. */
+.vj-hero-foot a::after { content: ''; position: absolute; inset: -13px -6px; }
 .vj-hero-foot a:hover { color: #fff; }
 .vj-hero-foot a:focus-visible, .vj-chapter[data-tone='dark'] a:focus-visible { outline-color: #fff; }
 
-.vj-checks { margin-top: 18px; padding-top: 16px; border-top: 1px solid var(--vj-rule); display: grid; gap: 12px; font-size: 17px; font-weight: 450; line-height: 1.5; color: var(--vj-ink-soft); }
+.vj-checks { margin-top: 18px; padding-top: 16px; border-top: 1px solid var(--vj-rule); display: grid; gap: 12px; font-size: 1.0625rem; font-weight: 450; line-height: 1.5; color: var(--vj-ink-soft); }
 .vj-checks li { display: flex; gap: 10px; align-items: flex-start; }
 .vj-checks svg { margin-top: 4px; flex: none; color: var(--vj-accent); }
 
 /* V3: three groups, paced by real measurements. */
 .vj-groups { display: grid; gap: clamp(56px, 9vh, 112px); margin-top: clamp(56px, 9vh, 112px); }
 .vj-group__head { display: grid; gap: 4px; padding-bottom: 16px; border-bottom: 1px solid var(--vj-rule); }
-.vj-group__badge { font-size: 12.5px; font-weight: 700; letter-spacing: 0.16em; color: #b8141a; }
-.vj-group__count { font-size: 12.5px; font-weight: 600; letter-spacing: 0.08em; color: var(--vj-ink-faint); }
+.vj-group__badge { font-size: 0.7812rem; font-weight: 700; letter-spacing: 0.16em; color: #b8141a; }
+.vj-group__count { font-size: 0.7812rem; font-weight: 600; letter-spacing: 0.08em; color: var(--vj-ink-faint); }
 .vj-points { display: grid; gap: 26px; margin-top: 24px; }
 .vj-points li { display: grid; gap: 4px; }
-.vj-points__number { font-size: 12.5px; font-weight: 700; letter-spacing: 0.1em; color: var(--vj-accent); }
-.vj-points h4 { font-family: 'Space Grotesk', system-ui, sans-serif; font-size: clamp(20px, 1.4vw, 23px); font-weight: 700; line-height: 1.25; }
-.vj-points p { font-size: clamp(17px, 0.4vw + 12px, 18.5px); font-weight: 450; line-height: 1.62; color: var(--vj-ink-soft); }
+.vj-points__number { font-size: 0.7812rem; font-weight: 700; letter-spacing: 0.1em; color: var(--vj-accent); }
+.vj-points h4 { font-family: 'Space Grotesk', system-ui, sans-serif; font-size: clamp(1.25rem, 1.4vw, 1.4375rem); font-weight: 700; line-height: 1.25; }
+.vj-points p { font-size: clamp(1.0625rem, 0.4vw + 0.75rem, 1.1562rem); font-weight: 450; line-height: 1.62; color: var(--vj-ink-soft); }
 
 /* V4: four values in flow; the vault folds while each is read. */
 .vj-pillars { display: grid; gap: clamp(56px, 9vh, 112px); margin-top: clamp(56px, 9vh, 112px); }
-.vj-pillar__index { font-size: 12.5px; font-weight: 600; letter-spacing: 0.16em; color: var(--vj-ink-faint); }
-.vj-pillar__title { margin-top: 6px; font-size: clamp(32px, 3.4vw, 46px); font-weight: 700; line-height: 1.08; }
+.vj-pillar__index { font-size: 0.7812rem; font-weight: 600; letter-spacing: 0.16em; color: var(--vj-ink-faint); }
+.vj-pillar__title { margin-top: 6px; font-size: clamp(2rem, 3.4vw, 2.875rem); font-weight: 700; line-height: 1.08; }
 .vj-pillar__focus {
   margin-top: 10px;
   padding-bottom: 12px;
   border-bottom: 1px solid var(--vj-rule);
-  font-size: 13px;
+  font-size: 0.8125rem;
   font-weight: 700;
   letter-spacing: 0.07em;
   line-height: 1.5;
@@ -211,13 +215,13 @@
 .vj-entities li { display: grid; gap: 2px; padding-left: 18px; border-left: 3px solid #0b4584; }
 .vj-entities li:nth-child(2) { border-left-color: #e31e24; }
 .vj-entities li:nth-child(3) { border-left-color: #081c33; }
-.vj-entities span { font-size: 12.5px; font-weight: 700; letter-spacing: 0.12em; color: var(--vj-accent); }
-.vj-entities h3 { font-size: 26px; font-weight: 700; }
-.vj-entities p { font-size: clamp(17px, 0.4vw + 12px, 18.5px); font-weight: 450; line-height: 1.6; color: var(--vj-ink-soft); }
-.vj-values__label { font-size: 12.5px; font-weight: 700; letter-spacing: 0.16em; color: var(--vj-ink-faint); }
+.vj-entities span { font-size: 0.7812rem; font-weight: 700; letter-spacing: 0.12em; color: var(--vj-accent); }
+.vj-entities h3 { font-size: 1.625rem; font-weight: 700; }
+.vj-entities p { font-size: clamp(1.0625rem, 0.4vw + 0.75rem, 1.1562rem); font-weight: 450; line-height: 1.6; color: var(--vj-ink-soft); }
+.vj-values__label { font-size: 0.7812rem; font-weight: 700; letter-spacing: 0.16em; color: var(--vj-ink-faint); }
 .vj-values { display: grid; grid-template-columns: 1fr 1fr; gap: 26px 32px; margin-top: 20px; }
-.vj-values h4 { font-family: 'Space Grotesk', system-ui, sans-serif; font-size: 20px; font-weight: 700; padding-bottom: 6px; border-bottom: 2px solid #0b4584; }
-.vj-values p { margin-top: 10px; font-size: 17px; font-weight: 450; line-height: 1.6; color: var(--vj-ink-soft); }
+.vj-values h4 { font-family: 'Space Grotesk', system-ui, sans-serif; font-size: 1.25rem; font-weight: 700; padding-bottom: 6px; border-bottom: 2px solid #0b4584; }
+.vj-values p { margin-top: 10px; font-size: 1.0625rem; font-weight: 450; line-height: 1.6; color: var(--vj-ink-soft); }
 
 /* V6 */
 /* Normal spacing to the footer (which has its own accent line and padding); no scenic-only tail. */
@@ -231,9 +235,9 @@
   color: #fff;
   box-shadow: 0 30px 60px -30px rgba(8, 28, 51, 0.55);
 }
-.vj-callout__tag { display: inline-block; padding: 4px 12px; background: #e31e24; font-size: 12px; font-weight: 700; letter-spacing: 0.06em; }
-.vj-callout h3 { margin-top: 20px; font-size: clamp(26px, 2.6vw, 36px); font-weight: 700; line-height: 1.15; }
-.vj-callout p { margin-top: 16px; font-size: clamp(17px, 0.4vw + 12px, 18.5px); font-weight: 450; line-height: 1.62; color: #e6ecf2; }
+.vj-callout__tag { display: inline-block; padding: 4px 12px; background: #e31e24; font-size: 0.75rem; font-weight: 700; letter-spacing: 0.06em; }
+.vj-callout h3 { margin-top: 20px; font-size: clamp(1.625rem, 2.6vw, 2.25rem); font-weight: 700; line-height: 1.15; }
+.vj-callout p { margin-top: 16px; font-size: clamp(1.0625rem, 0.4vw + 0.75rem, 1.1562rem); font-weight: 450; line-height: 1.62; color: #e6ecf2; }
 .vj-callout__actions { margin-top: 26px; display: flex; flex-wrap: wrap; gap: 14px; }
 .vj-callout a:focus-visible, .vj-callout button:focus-visible { outline-color: #fff; }
 .vj-button {
@@ -242,7 +246,7 @@
   justify-content: center;
   gap: 10px;
   padding: 16px 28px;
-  font-size: 12.5px;
+  font-size: 0.7812rem;
   font-weight: 600;
   letter-spacing: 0.06em;
   text-transform: uppercase;
@@ -267,18 +271,24 @@
   /* Text spans the width on phones: the band covers it evenly, still only over the chapter's text. */
   .vj-frame, .vj-frame--hero { --vj-band-solid: 100%; --vj-band-end: 100%; --vj-band-feather: 40px; }
   .vj-chapter--last .vj-frame { padding-bottom: 40px; }
-  .vj-display { font-size: clamp(36px, 10.5vw, 54px); margin-top: 20px; }
+  .vj-display { font-size: clamp(2.25rem, 10.5vw, 3.375rem); margin-top: 20px; }
   .vj-values { grid-template-columns: 1fr; }
-  .vj-hero-foot { font-size: 12px; }
+  .vj-hero-foot { font-size: 0.75rem; }
   .vj-hero-foot > span { display: none; }
   .vj-groups, .vj-pillars { gap: 64px; margin-top: 64px; }
   /* Shorter screens and travel on phones: the same per-boundary balance, slightly tighter. */
   .vj-passage { height: max(calc(var(--vj-view) * var(--vj-passage, 0.72) * 0.88), 300px); }
 }
 
+/* Ultra-wide screens (21:9 and wider): the scene is framed across the whole width, so the copy
+   follows it outwards instead of drifting under the aircraft in a centred 1376px frame. */
+@media (min-aspect-ratio: 21/10) and (min-width: 1800px) {
+  .vj-frame { width: min(100%, 78vw); }
+}
+
 @media (max-height: 600px) and (min-width: 768px) {
   .vj-frame--hero { min-height: auto; }
-  .vj-display { font-size: 44px; }
+  .vj-display { font-size: 2.75rem; }
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -286,3 +296,6 @@
   /* Still compositions cut between chapters: only a short breathing space is needed. */
   .vj-passage { height: calc(var(--vj-view) * 0.3); }
 }
+
+/* Long Italian words wrap (or hyphenate) instead of overflowing with enlarged text. */
+.vj h1, .vj h2, .vj h3 { overflow-wrap: break-word; hyphens: auto; }

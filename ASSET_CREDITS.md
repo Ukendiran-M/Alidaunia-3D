@@ -27,3 +27,5 @@ The visible footer disclosure is implemented in `src/components/Footer.tsx`.
 Brand images and logo are supplied project references for this Alidaunia presentation; their inclusion does not grant new rights to the brand or imagery.
 
 Fonts: Plus Jakarta Sans, Space Grotesk and JetBrains Mono are bundled from their Fontsource variable packages. Their SIL Open Font License notices are included in `public/licenses/` and copied into the build.
+
+Manifesto M2–M6 objects (`public/manifesto-assets/`): the systems folio, the illustrative lifecycle site, the wind instrument, the folding schematic network, the four transition cues and their procedural maps were created for this project (Alidaunia Manifesto M2–M6 kit). They are concept illustrations, not certified products, engineering specifications, georeferenced charts or live operating data. The M6 signature is a shallow extrusion of the supplied logo paths; brand rights remain with their owner. They use the same Studio Small 09 1K HDR listed above. Full provenance: `docs/manifesto-asset-sources.md`.
